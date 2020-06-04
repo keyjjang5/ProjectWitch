@@ -10,6 +10,7 @@ public class Hand : MonoBehaviour
      * cards : 손에 있는 카드들의 List
      * maxCost : 플레이어가 가지고 있는 최대치의 Cost
      * currentCost : 플레이어가 가지고 있는 사용 가능한 Cost
+     * costText : 현재 코스트와 최대 코스트를 나타내는 Text오브젝트
      */
 
     public static Hand instance;

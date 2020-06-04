@@ -33,10 +33,17 @@ public class TurnSystem : MonoBehaviour
     }
 
     // 전투 시작
-    public void Fight()
+    public void FightStart()
     {
+        Deck.instance.CreateCopyDeck();
         enemySystem.Load();
         PlayerTurnStart();
+    }
+
+    // 전투 종료
+    public void FightEnd()
+    {
+        Deck.instance.ClearCopyDeck();
     }
 
     // 플레이어의 턴을 시작
