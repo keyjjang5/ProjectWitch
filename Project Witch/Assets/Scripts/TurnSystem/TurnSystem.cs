@@ -36,6 +36,7 @@ public class TurnSystem : MonoBehaviour
     public void FightStart()
     {
         Deck.instance.CreateCopyDeck();
+        Deck.instance.Shuffle();
         enemySystem.Load();
         PlayerTurnStart();
     }

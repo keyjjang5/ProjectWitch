@@ -9,6 +9,8 @@ public class CardSystem : MonoBehaviour
      * instance : Singleton 패턴 사용
      * deck : 덱을 관리
      * hand : 손 패를 관리
+     * readyFlag : 사용 준비중을 확인
+     * readyCard : 사용 준비중인 카드를 가지고 있음
      */
     public static CardSystem instance;
 
@@ -55,9 +57,9 @@ public class CardSystem : MonoBehaviour
         if (hand.Use(readyCard, target))
             deck.AddGraveyard(readyCard);
 
-        Cancel();
+        hand.Sort(readyCard);
 
-        hand.Sort();
+        Cancel();
 
         return target;
     }
@@ -98,7 +100,7 @@ public class CardSystem : MonoBehaviour
         Draw();
         Draw();
 
-        hand.Sort();
+        hand.SortAll();
     }
 
     // 턴 종료시에 사용한다.

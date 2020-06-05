@@ -62,6 +62,6 @@ public class Enemy : MonoBehaviour
     virtual public void Die()
     {
         Debug.Log(gameObject.name + " : Died");
-        Destroy(gameObject);
+        EnemySystem.instance.Die(gameObject);
     }
 }

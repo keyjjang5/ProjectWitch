@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unit
+public class Unit : MonoBehaviour
 {
     /*
      * cards : 이 유닛이 가지고 있는 카드들
@@ -16,9 +16,9 @@ public class Unit
     private int hp;
     protected uint drawCount;
     public uint DrawCound { get { return drawCount; } }
-    protected string name;
+    protected new string name;
 
-    public Unit()
+    void Start()
     {
         name = "Unit";
         drawCount = 0;
@@ -43,5 +43,20 @@ public class Unit
     virtual public void Load()
     {
 
+    }
+
+    // Unit이 가지고 있는 카드를 정렬한다.
+    virtual public void Sort()
+    {
+        int j = 0;
+        for (int i = 2; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).localPosition = new Vector3(0, 0.55f, 1);
+            if (transform.GetChild(i).gameObject.activeSelf)
+            {
+                transform.GetChild(i).Translate(0, 0.7f * j, 0);
+                j++;
+            }
+        }
     }
 }

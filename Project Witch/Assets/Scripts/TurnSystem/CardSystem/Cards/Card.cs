@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public class Card : MonoBehaviour
 {
     /*
@@ -58,22 +59,20 @@ public class Card : MonoBehaviour
     {
         scale = transform.localScale;
 
-        transform.Translate(0, 1, -1);
+        //transform.Translate(0, 1, -1);
         transform.localScale = transform.localScale * 1.4f;
     }
 
     // 카드의 강조 표시를 취소 할 때 사용한다.
     public void DeHighlight()
     {
-        transform.Translate(0, -1, 1);
+        //transform.Translate(0, -1, 1);
         transform.localScale = scale;
     }
 
     // 카드를 선택 했을 때 사용한다.
     public void Select()
     {
-        if (transform.parent.name != "Hand")
-            return;
         if (CardSystem.instance.ReadyFlag)
             return;
 

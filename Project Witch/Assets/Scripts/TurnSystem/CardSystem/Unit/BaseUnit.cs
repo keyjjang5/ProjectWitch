@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BaseUnit : Unit
 {
-    public BaseUnit():base()
+    private void Awake()
     {
         name = "BaseUnit";
         drawCount = 1;
@@ -12,11 +12,16 @@ public class BaseUnit : Unit
         Load();
     }
 
+    void Start()
+    {
+        
+    }
+
     // 유닛이 가지고 있는 카드들을 불러온다.
     override public void Load()
     {
-        cards.Add(Resources.Load("Prefaps/Cards/RealBaseCard") as GameObject);
-        cards.Add(Resources.Load("Prefaps/Cards/RealBaseCard") as GameObject);
-        cards.Add(Resources.Load("Prefaps/Cards/RealBaseCard") as GameObject);
+        cards.Add(Resources.Load("Prefaps/Cards/BaseCard") as GameObject);
+        cards.Add(Resources.Load("Prefaps/Cards/BaseCard") as GameObject);
+        cards.Add(Resources.Load("Prefaps/Cards/BaseCard") as GameObject);
     }
 }

@@ -6,15 +6,17 @@ public class Deck : MonoBehaviour
 {
     /*
      * instance : Singleton 패턴 사용
-     * cards : 덱에 들어있는 카드
+     * saveDeck : 보관중인 덱
+     * tempDeck : 전투시에 임시로 만들어 사용하는 덱
      * graveyard : 무덤에 들어있는 카드
+     * allys : 동료들
      */
 
     public static Deck instance;
     [SerializeField] List<GameObject> saveDeck = new List<GameObject>();
     [SerializeField] List<GameObject> tempDeck = new List<GameObject>();
     [SerializeField] List<GameObject> graveyard = new List<GameObject>();
-    [SerializeField] List<Unit> allys = new List<Unit>();
+    [SerializeField] List<GameObject> allys = new List<GameObject>();
 
     private void Awake()
     {
@@ -40,7 +42,7 @@ public class Deck : MonoBehaviour
         tempDeck.AddRange(graveyard);
         foreach(GameObject card in tempDeck)
         {
-            card.transform.SetParent(transform.Find("Deck"));
+            //card.transform.SetParent(transform.Find("Deck"));
         }
         graveyard.Clear();
 
@@ -64,18 +66,18 @@ public class Deck : MonoBehaviour
     }
 
     // 덱에 카드를 추가한다.(임시 버전)
-    public void AddCard(Unit unit)
+    public void AddCard(GameObject unit)
     {
-        foreach (GameObject card in unit.Cards)
+        foreach (GameObject card in unit.GetComponent<Unit>().Cards)
         {
             saveDeck.Add(card);
         }
     }
 
     // 덱에서 Unit이 없어짐에 따라 카드를 제거한다.
-    public void RemoveCard(Unit unit)
+    public void RemoveCard(GameObject unit)
     {
-        foreach (GameObject card in unit.Cards)
+        foreach (GameObject card in unit.GetComponent<Unit>().Cards)
         {
             saveDeck.Remove(card);
         }
@@ -85,14 +87,36 @@ public class Deck : MonoBehaviour
     public void CreateCopyDeck()
     {
         GameObject newCard;
+        int i = 0;
 
-        foreach (GameObject card in saveDeck)
+        foreach (GameObject ally in allys)
         {
-            newCard = Instantiate(card);
-            newCard.SetActive(false);
-            newCard.transform.SetParent(transform.Find("Deck"));
-            tempDeck.Add(newCard);
+            GameObject newAlly = Instantiate(ally, transform.GetChild(i));
+            newAlly.SetActive(true);
+            foreach (GameObject card in ally.GetComponent<Unit>().Cards)
+            {
+                newCard = Instantiate(card, newAlly.transform);
+                newCard.SetActive(false);
+
+                tempDeck.Add(newCard);
+            }
+            i++;
         }
+
+        //foreach (GameObject card in saveDeck)
+        //{
+        //    newCard = Instantiate(card);
+        //    newCard.SetActive(false);
+        //    newCard.transform.SetParent(transform);
+        //    tempDeck.Add(newCard);
+        //}
+
+        //i = 0;
+        //foreach (Unit ally in allys)
+        //{
+        //    Instantiate(ally.Portrait, transform.GetChild(i));
+        //    i++;
+        //}
     }
 
     public void ClearCopyDeck()
@@ -105,7 +129,7 @@ public class Deck : MonoBehaviour
     {
         graveyard.Add(usedCard);
         usedCard.SetActive(false);
-        usedCard.transform.SetParent(transform.Find("Graveyard"));
+        // usedCard.transform.SetParent(transform.parent.Find("Graveyard"));
     }
 
     // 전투덱에 있는 num번째 카드를 제거한다.
@@ -126,12 +150,14 @@ public class Deck : MonoBehaviour
     // 덱에 Unit을 추가한다. (미완성, 이후에 자유로운 추가가 가능해질 것)
     public void AddUnit()
     {
-        allys.Add(new BaseUnit());
+        GameObject newAlly = Instantiate(Resources.Load("Prefaps/Unit/BaseUnit") as GameObject);
+        newAlly.SetActive(false);
+        allys.Add(newAlly);
         AddCard(allys[allys.Count - 1]);
     }
 
     // 덱에 있는 Unit을 제거한다.
-    public void RemoveUnit(Unit unit)
+    public void RemoveUnit(GameObject unit)
     {
         allys.Remove(unit);
         RemoveCard(unit);

@@ -91,4 +91,10 @@ public class EnemySystem : MonoBehaviour
             i += 2;
         }
     }
+
+    public void Die(GameObject enemy)
+    {
+        enemies.Remove(enemy);
+        Destroy(enemy);
+    }
 }

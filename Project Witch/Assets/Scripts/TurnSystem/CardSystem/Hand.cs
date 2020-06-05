@@ -30,6 +30,7 @@ public class Hand : MonoBehaviour
     {
         maxCost = 3;
         currentCost = maxCost;
+        costText = GameObject.Find("UI Canvas/Cost");
     }
 
     // Update is called once per frame
@@ -83,13 +84,16 @@ public class Hand : MonoBehaviour
     // 덱에서 손으로 카드를 가져온다.
     public void Draw(GameObject card)
     {
-        card.transform.SetParent(transform.root);
-        card.transform.localScale = Vector3.one;
-        card.transform.SetPositionAndRotation(new Vector3(transform.position.x, -3, transform.position.z),
-                                                            transform.rotation);
+        //card.transform.SetParent(transform.root);
+        //card.transform.localScale = Vector3.one;
+        //card.transform.SetPositionAndRotation(new Vector3(transform.position.x, -3, transform.position.z),
+        //                                                   transform.rotation);
+
         cards.Add(card);
-        card.transform.SetParent(transform.Find("Hand"));
+        //card.transform.SetParent(transform);
         card.SetActive(true);
+
+        Sort(card);
     }
 
     // 손 패의 개수를 반환한다.
@@ -98,35 +102,47 @@ public class Hand : MonoBehaviour
         return cards.Count;
     }
 
-    // 손 패를 보기 좋게 정렬한다.
-    public void Sort()
-    {
-        int num = cards.Count;
-        int distance;
-        // 홀수
-        if (num % 2 == 1)
-        {
-            distance = (num - 1) / 2;
+    // 손 패를 보기 좋게 정렬한다. 아래의 Sort로 바꿈, 보존용
+    //public void Sort()
+    //{
+    //    int num = cards.Count;
+    //    int distance;
+    //    // 홀수
+    //    if (num % 2 == 1)
+    //    {
+    //        distance = (num - 1) / 2;
             
-            for(int i = 0;i<num;i++)
-            {
-                cards[i].transform.SetPositionAndRotation(new Vector3(-distance * 1, cards[i].transform.position.y, -distance * 0.1f),
-                                                            cards[i].transform.rotation);
-                distance -= 1;
-            }
-        }
-        // 짝수
-        else
-        {
-            distance = num / 2;
+    //        for(int i = 0;i<num;i++)
+    //        {
+    //            cards[i].transform.SetPositionAndRotation(new Vector3(-distance * 1, cards[i].transform.position.y, -distance * 0.1f),
+    //                                                        cards[i].transform.rotation);
+    //            distance -= 1;
+    //        }
+    //    }
+    //    // 짝수
+    //    else
+    //    {
+    //        distance = num / 2;
 
-            for (int i = 0; i < num; i++)
-            {
-                cards[i].transform.SetPositionAndRotation(new Vector3((-distance * 1) + 0.5f, cards[i].transform.position.y, -distance * 0.1f),
-                                                            cards[i].transform.rotation);
-                distance -= 1;
-            }
-        }
+    //        for (int i = 0; i < num; i++)
+    //        {
+    //            cards[i].transform.SetPositionAndRotation(new Vector3((-distance * 1) + 0.5f, cards[i].transform.position.y, -distance * 0.1f),
+    //                                                        cards[i].transform.rotation);
+    //            distance -= 1;
+    //        }
+    //    }
+    //}
+
+    // 가저온 카드를 가지고 있는 Unit에게 정리 요청
+    public void Sort(GameObject card)
+    {
+        card.GetComponentInParent<Unit>().Sort();
+    }
+
+    // 모든 카드를 정리
+    public void SortAll()
+    {
+        
     }
 
     // num 만큼 currentCost를 회복함
