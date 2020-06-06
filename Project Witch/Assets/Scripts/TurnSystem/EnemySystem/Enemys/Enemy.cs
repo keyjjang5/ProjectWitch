@@ -9,7 +9,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected State previousState;
     protected int maxHp;
     [SerializeField] protected int hp;
-
+    private int position;
+    public int Position { get { return position; } }
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +46,8 @@ public class Enemy : MonoBehaviour
     // CardSystem이 준비 했던 카드를 사용하게 한다.
     public void CardUse()
     {
-        CardSystem.instance.Use(gameObject);
+        int depth = position / 3 + 1;
+        CardSystem.instance.Use(gameObject, depth);
     }
 
     // num만큼 체력을 잃는다.
@@ -63,5 +65,11 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log(gameObject.name + " : Died");
         EnemySystem.instance.Die(gameObject);
+    }
+
+    // 외부에서 포지션을 설정해줘야 함
+    virtual public void SetPosition(int num)
+    {
+        position = num;
     }
 }

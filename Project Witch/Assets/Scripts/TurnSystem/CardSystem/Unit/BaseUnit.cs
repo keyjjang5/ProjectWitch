@@ -12,11 +12,6 @@ public class BaseUnit : Unit
         Load();
     }
 
-    void Start()
-    {
-        
-    }
-
     // 유닛이 가지고 있는 카드들을 불러온다.
     override public void Load()
     {

@@ -65,17 +65,19 @@ public class Hand : MonoBehaviour
     }
 
     // 손에 있는 card를 target에게 사용한다.
-    public bool Use(GameObject card, GameObject target)
+    public bool Use(GameObject card, GameObject target, int depth)
     {
         uint cost = card.GetComponent<Card>().Cost;
+
         if (cost > currentCost)
+            return false;
+        if (!card.GetComponent<Card>().Use(target, depth))
             return false;
 
         // 카드 사용 코스트 소모
         currentCost -= cost;
         costText.GetComponent<Text>().text = currentCost + " / " + maxCost;
 
-        card.GetComponent<Card>().Use(target);
         cards.Remove(card);
 
         return true;
@@ -102,36 +104,37 @@ public class Hand : MonoBehaviour
         return cards.Count;
     }
 
-    // 손 패를 보기 좋게 정렬한다. 아래의 Sort로 바꿈, 보존용
-    //public void Sort()
-    //{
-    //    int num = cards.Count;
-    //    int distance;
-    //    // 홀수
-    //    if (num % 2 == 1)
-    //    {
-    //        distance = (num - 1) / 2;
-            
-    //        for(int i = 0;i<num;i++)
-    //        {
-    //            cards[i].transform.SetPositionAndRotation(new Vector3(-distance * 1, cards[i].transform.position.y, -distance * 0.1f),
-    //                                                        cards[i].transform.rotation);
-    //            distance -= 1;
-    //        }
-    //    }
-    //    // 짝수
-    //    else
-    //    {
-    //        distance = num / 2;
+    /*손 패를 보기 좋게 정렬한다.아래의 Sort로 바꿈, 보존용
+    public void Sort()
+    {
+        int num = cards.Count;
+        int distance;
+        // 홀수
+        if (num % 2 == 1)
+        {
+            distance = (num - 1) / 2;
 
-    //        for (int i = 0; i < num; i++)
-    //        {
-    //            cards[i].transform.SetPositionAndRotation(new Vector3((-distance * 1) + 0.5f, cards[i].transform.position.y, -distance * 0.1f),
-    //                                                        cards[i].transform.rotation);
-    //            distance -= 1;
-    //        }
-    //    }
-    //}
+            for (int i = 0; i < num; i++)
+            {
+                cards[i].transform.SetPositionAndRotation(new Vector3(-distance * 1, cards[i].transform.position.y, -distance * 0.1f),
+                                                            cards[i].transform.rotation);
+                distance -= 1;
+            }
+        }
+        // 짝수
+        else
+        {
+            distance = num / 2;
+
+            for (int i = 0; i < num; i++)
+            {
+                cards[i].transform.SetPositionAndRotation(new Vector3((-distance * 1) + 0.5f, cards[i].transform.position.y, -distance * 0.1f),
+                                                            cards[i].transform.rotation);
+                distance -= 1;
+            }
+        }
+    }
+    */
 
     // 가저온 카드를 가지고 있는 Unit에게 정리 요청
     public void Sort(GameObject card)

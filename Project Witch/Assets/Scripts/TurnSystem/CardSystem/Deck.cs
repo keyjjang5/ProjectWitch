@@ -26,8 +26,8 @@ public class Deck : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AddUnit();
-        AddUnit();
+        AddUnit("Prefaps/Unit/BaseUnit");
+        AddUnit("Prefaps/Unit/NekoUnit");
     }
 
     // Update is called once per frame
@@ -40,10 +40,10 @@ public class Deck : MonoBehaviour
     public void MixGraveyard()
     {
         tempDeck.AddRange(graveyard);
-        foreach(GameObject card in tempDeck)
-        {
+        //foreach(GameObject card in tempDeck)
+        //{
             //card.transform.SetParent(transform.Find("Deck"));
-        }
+        //}
         graveyard.Clear();
 
         Shuffle();
@@ -148,9 +148,9 @@ public class Deck : MonoBehaviour
     }
 
     // 덱에 Unit을 추가한다. (미완성, 이후에 자유로운 추가가 가능해질 것)
-    public void AddUnit()
+    public void AddUnit(string path)
     {
-        GameObject newAlly = Instantiate(Resources.Load("Prefaps/Unit/BaseUnit") as GameObject);
+        GameObject newAlly = Instantiate(Resources.Load(path) as GameObject);
         newAlly.SetActive(false);
         allys.Add(newAlly);
         AddCard(allys[allys.Count - 1]);

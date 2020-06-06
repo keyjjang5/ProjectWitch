@@ -13,6 +13,8 @@ public class Card : MonoBehaviour
     protected uint cost;
     public uint Cost { get { return cost; } }
     private Vector3 scale;
+    protected int maxRange;
+    protected int minRange;
 
     private void Awake()
     {
@@ -86,8 +88,10 @@ public class Card : MonoBehaviour
     }
 
     // 사용했을 때 사용되는 효과를 나타낸다.
-    virtual public void Use(GameObject target)
+    virtual public bool Use(GameObject target, int depth)
     { 
         Debug.Log("card");
+
+        return true;
     }
 }

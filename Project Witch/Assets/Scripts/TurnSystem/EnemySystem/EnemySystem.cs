@@ -54,21 +54,26 @@ public class EnemySystem : MonoBehaviour
     // 파일에서 데이터를 읽어온다. 미완성
     public void Load()
     {
-        enemies.Add(Resources.Load("Prefaps/Enemys/BaseEnemy") as GameObject);
-        enemies.Add(Resources.Load("Prefaps/Enemys/BaseEnemy") as GameObject);
-        enemies.Add(Resources.Load("Prefaps/Enemys/BaseEnemy") as GameObject);
-        // 몬스터들 데이터 읽어오기
-        List<GameObject> temp = new List<GameObject>();
+        // CSV 읽어서 쓸거임
+        int count = 9;
 
-        foreach (GameObject enemy in enemies)
+        for(int i = 0; i<count; i++)
         {
-            GameObject newEnemy = Instantiate(enemy);
-            newEnemy.SetActive(false);
-            temp.Add(newEnemy);
-        }
-        enemies.Clear();
-        enemies.AddRange(temp);
+            // CSV 읽어서 쓸거임
+            string resourcePath = "Prefaps/Enemies/BaseEnemy";
+            int posNum = i + 1;
+            //
 
+            GameObject enemy = Resources.Load(resourcePath) as GameObject;
+            GameObject newEnemy = Instantiate(enemy);
+            newEnemy.GetComponent<Enemy>().SetPosition(posNum);
+
+            newEnemy.transform.SetParent(transform.Find("Pos" + newEnemy.GetComponent<Enemy>().Position));
+
+            newEnemy.transform.localPosition = Vector3.zero;
+            newEnemy.SetActive(false);
+            enemies.Add(newEnemy);
+        }
 
         Summon(enemies);
     }
@@ -86,12 +91,13 @@ public class EnemySystem : MonoBehaviour
         {
             enemy.SetActive(true);
             // newEnemy 위치 등등 조절부
-            enemy.transform.Translate(-i, 0, 0);
+            //enemy.transform.Translate(-i, 0, 0);
 
             i += 2;
         }
     }
 
+    // Enemy 사망시 사용
     public void Die(GameObject enemy)
     {
         enemies.Remove(enemy);

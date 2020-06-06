@@ -52,9 +52,9 @@ public class CardSystem : MonoBehaviour
     }
 
     // readyCard를 사용한다.
-    public GameObject Use(GameObject target)
+    public GameObject Use(GameObject target, int depth)
     {
-        if (hand.Use(readyCard, target))
+        if (hand.Use(readyCard, target, depth))
             deck.AddGraveyard(readyCard);
 
         hand.Sort(readyCard);
