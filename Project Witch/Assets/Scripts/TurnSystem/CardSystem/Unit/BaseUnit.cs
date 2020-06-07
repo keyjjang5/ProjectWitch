@@ -9,14 +9,6 @@ public class BaseUnit : Unit
         name = "BaseUnit";
         drawCount = 1;
 
-        Load();
-    }
-
-    // 유닛이 가지고 있는 카드들을 불러온다.
-    override public void Load()
-    {
-        cards.Add(Resources.Load("Prefaps/Cards/BaseCard") as GameObject);
-        cards.Add(Resources.Load("Prefaps/Cards/BaseCard") as GameObject);
-        cards.Add(Resources.Load("Prefaps/Cards/BaseCard") as GameObject);
+        Load(1);
     }
 }

@@ -52,16 +52,18 @@ public class EnemySystem : MonoBehaviour
     }
 
     // 파일에서 데이터를 읽어온다. 미완성
-    public void Load()
+    public void Load(int num)
     {
         // CSV 읽어서 쓸거임
-        int count = 9;
+        int count = (int)DataBase.instance.MapData[num]["Count"];
 
-        for(int i = 0; i<count; i++)
+        for (int i = 1; i < count + 1; i++)
         {
             // CSV 읽어서 쓸거임
-            string resourcePath = "Prefaps/Enemies/BaseEnemy";
-            int posNum = i + 1;
+            int enemyPath = (int)DataBase.instance.MapData[num]["Enemy" + i];
+            
+            string resourcePath = DataBase.instance.EnemyData[enemyPath]["Path"] as string;//"Prefaps/Enemies/BaseEnemy";
+            int posNum = (int)DataBase.instance.MapData[num]["Pos" + i];
             //
 
             GameObject enemy = Resources.Load(resourcePath) as GameObject;

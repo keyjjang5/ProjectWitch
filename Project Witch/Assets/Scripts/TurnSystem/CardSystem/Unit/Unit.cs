@@ -40,9 +40,18 @@ public class Unit : MonoBehaviour
     }
 
     // 유닛이 가지고 있는 카드들을 불러온다.
-    virtual public void Load()
+    virtual public void Load(int num)
     {
+        for (int i = 1; i < 6; i++)
+        {
+            int j = (int)DataBase.instance.UnitData[num]["Card" + i];
 
+            if (0 == j)
+                continue;
+
+            GameObject temp = Resources.Load(DataBase.instance.CardData[j]["Path"] as string) as GameObject;
+            cards.Add(temp);
+        }
     }
 
     // Unit이 가지고 있는 카드를 정렬한다.

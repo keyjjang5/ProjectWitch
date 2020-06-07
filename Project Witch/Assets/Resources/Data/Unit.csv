@@ -1,0 +1,4 @@
+﻿Number,Name,Path,Card1,Card2,Card3,Card4,Card5
+0,null,null,0,0,0,0,0
+1,Base,Prefaps/Unit/BaseUnit,1,1,1,0,0
+2,Neko,Prefaps/Unit/NekoUnit,2,2,2,0,0
