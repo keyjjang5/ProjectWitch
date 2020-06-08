@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour
     // CardSystem이 준비 했던 카드를 사용하게 한다.
     public void CardUse()
     {
-        int depth = position / 3 + 1;
+        int depth = (position - 1) / 3 + 1;
         CardSystem.instance.Use(gameObject, depth);
     }
 

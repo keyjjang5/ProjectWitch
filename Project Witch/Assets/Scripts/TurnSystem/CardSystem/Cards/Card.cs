@@ -94,4 +94,16 @@ public class Card : MonoBehaviour
 
         return true;
     }
+
+    // 카드의 사정거리를 확인한다.
+    virtual public bool CheckRange(int depth)
+    {
+        if (minRange > depth || depth > maxRange)
+        {
+            Debug.Log("당신은 사정거리가 맞지 않습니다.");
+            return false;
+        }
+
+        return true;
+    }
 }

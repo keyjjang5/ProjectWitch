@@ -22,11 +22,8 @@ public class TestCard : Card
 
     override public bool Use(GameObject target, int depth)
     {
-        if (minRange > depth || depth > maxRange)
-        {
-            Debug.Log("당신은 사정거리가 맞지 않습니다.");
+        if (!CheckRange(depth))
             return false;
-        }
 
         Debug.Log("TestCard : " + target.name);
         target.GetComponent<Enemy>().Hited(20);

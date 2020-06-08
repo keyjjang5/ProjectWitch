@@ -58,7 +58,7 @@ public class Unit : MonoBehaviour
     virtual public void Sort()
     {
         int j = 0;
-        for (int i = 2; i < transform.childCount; i++)
+        for (int i = 1; i < transform.childCount; i++)
         {
             transform.GetChild(i).localPosition = new Vector3(0, 0.55f, 1);
             if (transform.GetChild(i).gameObject.activeSelf)
