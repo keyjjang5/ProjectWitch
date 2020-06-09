@@ -17,6 +17,8 @@ public class Deck : MonoBehaviour
     [SerializeField] List<GameObject> tempDeck = new List<GameObject>();
     [SerializeField] List<GameObject> graveyard = new List<GameObject>();
     [SerializeField] List<GameObject> allys = new List<GameObject>();
+    public List<GameObject> Allys { get { return allys; } }
+
 
     private void Awake()
     {
@@ -87,12 +89,12 @@ public class Deck : MonoBehaviour
     public void CreateCopyDeck()
     {
         GameObject newCard;
-        int i = 0;
 
         foreach (GameObject ally in allys)
         {
-            GameObject newAlly = Instantiate(ally, transform.GetChild(i));
+            GameObject newAlly = ally; //Instantiate(ally, transform.GetChild(i));
             newAlly.SetActive(true);
+
             foreach (GameObject card in ally.GetComponent<Unit>().Cards)
             {
                 newCard = Instantiate(card, newAlly.transform);
@@ -100,7 +102,11 @@ public class Deck : MonoBehaviour
 
                 tempDeck.Add(newCard);
             }
-            i++;
+        }
+
+        for (int i = 0; i < allys.Count; i++)
+        {
+            HPSystem.instance.ActiveHpBar(allys[i].GetComponent<Unit>(), i);
         }
 
         //foreach (GameObject card in saveDeck)
@@ -150,7 +156,7 @@ public class Deck : MonoBehaviour
     // 덱에 Unit을 추가한다. (미완성, 이후에 자유로운 추가가 가능해질 것)
     public void AddUnit(string path)
     {
-        GameObject newAlly = Instantiate(Resources.Load(path) as GameObject);
+        GameObject newAlly = Instantiate(Resources.Load(path) as GameObject, transform.GetChild(allys.Count));
         newAlly.SetActive(false);
         allys.Add(newAlly);
         AddCard(allys[allys.Count - 1]);
@@ -163,8 +169,19 @@ public class Deck : MonoBehaviour
         RemoveCard(unit);
     }
 
-    public void test()
+    public Unit GetUnit(int num)
     {
-        RemoveUnit(allys[0]);
+        return allys[num].GetComponent<Unit>();
+    }
+
+    public uint GetDrawCount()
+    {
+        uint drawCount = 0;
+        foreach(GameObject ally in allys)
+        {
+            drawCount += ally.GetComponent<Unit>().DrawCount;
+        }
+
+        return drawCount;
     }
 }

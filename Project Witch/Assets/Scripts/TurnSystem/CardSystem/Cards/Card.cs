@@ -106,4 +106,10 @@ public class Card : MonoBehaviour
 
         return true;
     }
+
+    // UI 업데이트
+    virtual public void UIUpdate()
+    {
+        HPSystem.instance.UpdateHp();
+    }
 }

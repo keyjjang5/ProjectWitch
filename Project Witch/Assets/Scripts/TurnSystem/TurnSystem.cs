@@ -39,6 +39,8 @@ public class TurnSystem : MonoBehaviour
         Deck.instance.Shuffle();
         enemySystem.Load(2);
         PlayerTurnStart();
+
+        HPSystem.instance.UpdateHp();
     }
 
     // 전투 종료

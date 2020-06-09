@@ -11,12 +11,19 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected int hp;
     private int position;
     public int Position { get { return position; } }
+    [SerializeField] protected Hate hate;
+
+    private void Awake()
+    {
+        maxHp = 100;
+        hp = maxHp;
+        hate = new Hate();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        maxHp = 100;
-        hp = maxHp;
+       
     }
 
     // Update is called once per frame
@@ -34,7 +41,8 @@ public class Enemy : MonoBehaviour
     // 상태에 따라 행동함
     virtual public void Action()
     {
-        currentState.Execute();
+        Unit target = SearchTarget();
+        currentState.Execute(target);
     }
 
     // 상태 변화 조건에 따라 상태가 변화함
@@ -71,5 +79,17 @@ public class Enemy : MonoBehaviour
     virtual public void SetPosition(int num)
     {
         position = num;
+    }
+
+    // 대상을 찾는다. State에 따라서 대상 검색 조건이 바뀐다.
+    virtual public Unit SearchTarget()
+    {
+        return hate.AllRandom();
+    }
+
+    // 공격을 받으면 증가
+    virtual public void DamagedHate(GameObject ally, float hitDamage)
+    {
+        hate.DamagedHate(ally, hitDamage);
     }
 }

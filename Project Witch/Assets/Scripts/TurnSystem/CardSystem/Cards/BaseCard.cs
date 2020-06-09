@@ -25,7 +25,15 @@ public class BaseCard : Card
             return false;
 
         Debug.Log("BaseCard : " + target.name);
-        target.GetComponent<Enemy>().Hited(10);
+
+        Enemy enemy = target.GetComponent<Enemy>();
+
+        enemy.Hited(10);
+
+        enemy.DamagedHate(transform.parent.gameObject, 10);
+        HateSystem.instance.HateUpdate();
+
+        UIUpdate();
 
         return true;
     }

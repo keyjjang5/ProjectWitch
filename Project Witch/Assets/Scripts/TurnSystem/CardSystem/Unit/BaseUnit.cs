@@ -9,6 +9,8 @@ public class BaseUnit : Unit
         name = "BaseUnit";
         drawCount = 1;
 
+        maxHp = 100;
+        hp = maxHp;
         Load(1);
     }
 }

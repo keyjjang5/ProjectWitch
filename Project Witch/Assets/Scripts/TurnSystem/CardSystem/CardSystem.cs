@@ -73,32 +73,34 @@ public class CardSystem : MonoBehaviour
     }
 
     // 카드를 뽑는다.
-    public void Draw()
+    public void Draw(uint num)
     {
-        GameObject temp;
-
-        if (deck.GetCardsLength() <= 0)
-            deck.MixGraveyard();
-
-        if (deck.GetCardsLength() <= 0)
+        for (int i = 0; i < num; i++)
         {
-            Debug.Log("Draw못해욧");
-            return;
+            GameObject temp;
+
+            if (deck.GetCardsLength() <= 0)
+                deck.MixGraveyard();
+
+            if (deck.GetCardsLength() <= 0)
+            {
+                Debug.Log("Draw못해욧");
+                return;
+            }
+
+            temp = deck.Remove(0);
+
+            hand.Draw(temp);
+
+            Debug.Log("Draw / 덱에 남은 개수 : " + deck.GetCardsLength() + "손에 있는 개수 : " + hand.GetCardsLength());
         }
-
-        temp = deck.Remove(0);
-
-        hand.Draw(temp);
-
-        Debug.Log("Draw / 덱에 남은 개수 : " + deck.GetCardsLength() + "손에 있는 개수 : " + hand.GetCardsLength());
     }
 
     // 턴 시작 시에 사용한다.
     public void CardStart()
     {
         hand.HandStart();
-        Draw();
-        Draw();
+        Draw(deck.GetDrawCount());
 
         hand.SortAll();
     }

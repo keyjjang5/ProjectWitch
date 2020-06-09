@@ -7,8 +7,10 @@ public class NekoUnit : Unit
     private void Awake()
     {
         name = "NekoUnit";
-        drawCount = 1;
+        drawCount = 2;
 
+        maxHp = 120;
+        hp = maxHp;
         Load(2);
     }
 }

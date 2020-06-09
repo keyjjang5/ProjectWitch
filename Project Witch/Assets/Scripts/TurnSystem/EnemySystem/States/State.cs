@@ -20,7 +20,7 @@ public class State
 
     }
 
-    virtual public void Execute()
+    virtual public void Execute(Unit target)
     {
 
     }

@@ -26,7 +26,15 @@ public class TestCard : Card
             return false;
 
         Debug.Log("TestCard : " + target.name);
-        target.GetComponent<Enemy>().Hited(20);
+
+        Enemy enemy = target.GetComponent<Enemy>();
+
+        enemy.Hited(20);
+
+        enemy.DamagedHate(transform.parent.gameObject, 20);
+        HateSystem.instance.HateUpdate();
+
+        UIUpdate();
 
         return true;
     }

@@ -13,15 +13,25 @@ public class Unit : MonoBehaviour
 
     protected List<GameObject> cards = new List<GameObject>();
     public List<GameObject> Cards { get { return cards; } }
-    private int hp;
+    [SerializeField] protected int hp;
+    public int Hp { get { return hp; } }
+    protected int maxHp;
+    public int MaxHp { get { return maxHp; } }
     protected uint drawCount;
-    public uint DrawCound { get { return drawCount; } }
+    public uint DrawCount { get { return drawCount; } }
     protected new string name;
 
-    void Start()
+    private void Awake()
     {
         name = "Unit";
         drawCount = 0;
+        maxHp = 100;
+        hp = maxHp;
+    }
+
+    void Start()
+    {
+        
     }
 
     // num만큼 체력을 잃는다.
@@ -67,5 +77,10 @@ public class Unit : MonoBehaviour
                 j++;
             }
         }
+    }
+
+    public float GetHPRate()
+    {
+        return (float)hp / (float)maxHp;
     }
 }

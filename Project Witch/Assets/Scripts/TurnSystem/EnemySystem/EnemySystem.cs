@@ -42,7 +42,7 @@ public class EnemySystem : MonoBehaviour
     // 적턴 종료 시 사용한다.
     public void EnemyEnd()
     {
-
+        HPSystem.instance.UpdateHp();
     }
 
     // 적의 상태를 갱신한다.
@@ -51,7 +51,7 @@ public class EnemySystem : MonoBehaviour
 
     }
 
-    // 파일에서 데이터를 읽어온다. 미완성
+    // 파일에서 Map데이터 num번째를 읽어온다.
     public void Load(int num)
     {
         // CSV 읽어서 쓸거임
@@ -62,7 +62,7 @@ public class EnemySystem : MonoBehaviour
             // CSV 읽어서 쓸거임
             int enemyPath = (int)DataBase.instance.MapData[num]["Enemy" + i];
             
-            string resourcePath = DataBase.instance.EnemyData[enemyPath]["Path"] as string;//"Prefaps/Enemies/BaseEnemy";
+            string resourcePath = DataBase.instance.EnemyData[enemyPath]["Path"] as string;
             int posNum = (int)DataBase.instance.MapData[num]["Pos" + i];
             //
 
@@ -80,22 +80,12 @@ public class EnemySystem : MonoBehaviour
         Summon(enemies);
     }
 
-    // 적 소환 함수, 미완성
+    // 적 소환 함수
     public void Summon(List<GameObject> enemies)
     {
-        int i = enemies.Count;
-        if (i % 2 == 1)
-            i--;
-
-        i = -i;
-        
         foreach (GameObject enemy in enemies)
         {
             enemy.SetActive(true);
-            // newEnemy 위치 등등 조절부
-            //enemy.transform.Translate(-i, 0, 0);
-
-            i += 2;
         }
     }
 
