@@ -9,6 +9,7 @@ public class Unit : MonoBehaviour
      * hp : 이 유닛의 체력
      * drawCount : 이 유닛이 드로우 하는 카드의 수
      * name : 이 유닛의 이름
+     * position : 이 유닛의 위치, 덱의 allys 의 번호와 같다.
      */
 
     protected List<GameObject> cards = new List<GameObject>();
@@ -20,6 +21,8 @@ public class Unit : MonoBehaviour
     protected uint drawCount;
     public uint DrawCount { get { return drawCount; } }
     protected new string name;
+    private int position;
+    public int Position { get { return position; } }
 
     private void Awake()
     {
@@ -47,6 +50,8 @@ public class Unit : MonoBehaviour
     virtual public void Die()
     {
         Debug.Log(name + " : Died");
+        HPSystem.instance.DieUnit(this);
+        Deck.instance.DieUnit(gameObject);
     }
 
     // 유닛이 가지고 있는 카드들을 불러온다.
@@ -79,8 +84,15 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public float GetHPRate()
+    // 체력 퍼센트를 반환한다.
+    public float GetHpRate()
     {
         return (float)hp / (float)maxHp;
+    }
+
+    // 외부에서 포지션을 설정해줘야 함
+    public void SetPosition(int num)
+    {
+        position = num;
     }
 }

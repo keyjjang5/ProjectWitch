@@ -27,15 +27,16 @@ public class DataBase : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        cardData = CSVParser.Read("Data/Card");
+        unitData = CSVParser.Read("Data/Unit");
+        enemyData = CSVParser.Read("Data/Enemy");
+        mapData = CSVParser.Read("Data/Map");
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        cardData = CSVParser.Read("Data/Card");
-        unitData = CSVParser.Read("Data/Unit");
-        enemyData = CSVParser.Read("Data/Enemy");
-        mapData = CSVParser.Read("Data/Map");
+        
     }
 
     // Update is called once per frame

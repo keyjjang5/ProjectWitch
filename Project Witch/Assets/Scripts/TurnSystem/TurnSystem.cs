@@ -47,6 +47,7 @@ public class TurnSystem : MonoBehaviour
     public void FightEnd()
     {
         Deck.instance.ClearCopyDeck();
+        Debug.Log("FightEnd");
     }
 
     // 플레이어의 턴을 시작

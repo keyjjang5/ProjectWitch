@@ -113,10 +113,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 911, y: 424}
-  m_MaxSize: {x: 22006, y: 10024}
+  m_MinSize: {x: 917, y: 448}
+  m_MaxSize: {x: 22012, y: 10024}
   vertical: 0
-  controlID: 129
+  controlID: 34
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -138,10 +138,10 @@ MonoBehaviour:
     y: 0
     width: 773
     height: 947
-  m_MinSize: {x: 202, y: 424}
-  m_MaxSize: {x: 4002, y: 8024}
+  m_MinSize: {x: 202, y: 448}
+  m_MaxSize: {x: 4002, y: 8048}
   vertical: 1
-  controlID: 36
+  controlID: 85
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -190,8 +190,8 @@ MonoBehaviour:
     y: 486
     width: 773
     height: 461
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 224}
+  m_MaxSize: {x: 4002, y: 4024}
   m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 12}
@@ -387,9 +387,9 @@ MonoBehaviour:
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -4.74885, y: -1.2, z: 0}
+    m_Target: {x: 0, y: 1.2149999, z: 2}
     speed: 2
-    m_Value: {x: -4.74885, y: -1.2, z: 0}
+    m_Value: {x: 0, y: 1.2149999, z: 2}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -409,21 +409,21 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
     yGrid:
-      m_Target: 1
+      m_Target: 0
       speed: 2
-      m_Value: 1
+      m_Value: 0
     zGrid:
       m_Target: 0
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: 0.12377157, y: 0.08028544, z: -0.010046621, w: 0.9890066}
+    m_Target: {x: 0.03445825, y: 0.04495826, z: -0.001550838, w: 0.99839324}
     speed: 2
-    m_Value: {x: 0.12377157, y: 0.08028544, z: -0.010046621, w: 0.9890066}
+    m_Value: {x: 0.03445825, y: 0.04495826, z: -0.001550838, w: 0.99839324}
   m_Size:
-    m_Target: 5.255287
+    m_Target: 7.417168
     speed: 2
-    m_Value: 5.255287
+    m_Value: 7.417168
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -594,9 +594,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: d4f9ffff
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 20faffffd4fbffff82290000f8290000202a00007a2a0000a82a0000
+      m_ExpandedIDs: 3aeeffff76f8ffffd4fbffff6e2900008a2900008e290000a4290000e2290000042a0000342a00005e2a0000962a00009e2a0000ce2a0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -658,19 +658,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/TurnSystem/EnemySystem/Hate
+    - Assets/Resources/Prefaps/Unit
   m_ViewMode: 1
   m_StartGridSize: 89
   m_LastFolders:
-  - Assets/Scripts/TurnSystem/EnemySystem/Hate
+  - Assets/Resources/Prefaps/Unit
   m_LastFoldersGridSize: 89
   m_LastProjectPath: C:\Users\keyjj\Desktop\Study\Witch\Project Witch
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: dc260000
-    m_LastClickedID: 9948
+    m_SelectedIDs: 74280000
+    m_LastClickedID: 10356
     m_ExpandedIDs: 00000000462600007c260000b8260000c0260000ce260000da2600006a270000ec27000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0

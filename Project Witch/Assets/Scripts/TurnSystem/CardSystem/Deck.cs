@@ -106,7 +106,7 @@ public class Deck : MonoBehaviour
 
         for (int i = 0; i < allys.Count; i++)
         {
-            HPSystem.instance.ActiveHpBar(allys[i].GetComponent<Unit>(), i);
+            HPSystem.instance.ActiveUnitHpBar(allys[i].GetComponent<Unit>(), i);
         }
 
         //foreach (GameObject card in saveDeck)
@@ -159,6 +159,7 @@ public class Deck : MonoBehaviour
         GameObject newAlly = Instantiate(Resources.Load(path) as GameObject, transform.GetChild(allys.Count));
         newAlly.SetActive(false);
         allys.Add(newAlly);
+        newAlly.GetComponent<Unit>().SetPosition(allys.Count - 1);
         AddCard(allys[allys.Count - 1]);
     }
 
@@ -169,11 +170,13 @@ public class Deck : MonoBehaviour
         RemoveCard(unit);
     }
 
+    // num번째의 유닛을 반환한다.
     public Unit GetUnit(int num)
     {
         return allys[num].GetComponent<Unit>();
     }
 
+    // 모든 유닛의 DrawCount를 반환한다.
     public uint GetDrawCount()
     {
         uint drawCount = 0;
@@ -183,5 +186,22 @@ public class Deck : MonoBehaviour
         }
 
         return drawCount;
+    }
+
+    // 유닛이 죽을 때 실행한다.
+    public void DieUnit(GameObject unit)
+    {
+        int i = allys.IndexOf(unit);
+        HateSystem.instance.DieUnit(i);
+        allys.Remove(unit);
+        // 영정사진걸기
+        // 카드 사용 막기
+        for (int j = 1; j < unit.transform.childCount; j++)
+        {
+            unit.transform.GetChild(j).GetComponent<Card>().Sealed();
+        }
+
+        if (allys.Count == 0)
+            TurnSystem.instance.FightEnd();
     }
 }

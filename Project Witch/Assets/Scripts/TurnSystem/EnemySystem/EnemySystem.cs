@@ -33,6 +33,9 @@ public class EnemySystem : MonoBehaviour
     {
         foreach(GameObject enemy in enemies)
         {
+            if (Deck.instance.Allys.Count == 0)
+                break;
+
             enemy.GetComponent<Enemy>().Action();
         }
 
@@ -86,13 +89,19 @@ public class EnemySystem : MonoBehaviour
         foreach (GameObject enemy in enemies)
         {
             enemy.SetActive(true);
+            HPSystem.instance.ActiveEnemyHpBar(enemy.GetComponent<Enemy>(), enemy.GetComponent<Enemy>().Position);
+            HateSystem.instance.Add(enemy.GetComponent<Enemy>().Hate);
         }
     }
 
     // Enemy 사망시 사용
     public void Die(GameObject enemy)
     {
+        HateSystem.instance.DieEnemy(enemies.IndexOf(enemy));
         enemies.Remove(enemy);
         Destroy(enemy);
+
+        if (enemies.Count == 0)
+            TurnSystem.instance.FightEnd();
     }
 }

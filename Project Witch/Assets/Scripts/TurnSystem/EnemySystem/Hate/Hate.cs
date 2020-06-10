@@ -32,8 +32,6 @@ public class Hate
         debuff = 1.0f;
         buff = 1.0f;
         heal = 1.0f;
-
-        HateSystem.instance.Add(this);
     }
 
     // HatePoint와 HateLevel 동기화
@@ -66,7 +64,7 @@ public class Hate
                 num = i;
             }
         }
-
+        
         return Deck.instance.GetUnit(num);
     }
 
@@ -163,5 +161,12 @@ public class Hate
     {
         int targetNum = Deck.instance.Allys.IndexOf(ally);
         hatePoints[targetNum] += (int)(hitDamage * damage);
+    }
+
+    // 유닛이 죽을 때 사용
+    public void DieUnit(int num)
+    {
+        hatePoints.RemoveAt(num);
+        hateLevels.RemoveAt(num);
     }
 }

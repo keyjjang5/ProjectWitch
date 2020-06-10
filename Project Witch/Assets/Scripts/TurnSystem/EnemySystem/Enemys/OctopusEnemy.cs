@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class OctopusEnemy : Enemy
 {
+    private void Awake()
+    {
+        maxHp = 100;
+        hp = maxHp;
+        hate = new Hate();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         states.Add(BaseState.instance);
         states.Add(AngryState.instance);
         states.Add(BerserkState.instance);
-        maxHp = 100;
-        hp = maxHp;
 
         currentState = states[0];
         currentState.Enter();

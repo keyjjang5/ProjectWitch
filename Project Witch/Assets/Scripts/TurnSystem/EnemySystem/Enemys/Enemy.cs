@@ -8,10 +8,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected State currentState;
     [SerializeField] protected State previousState;
     protected int maxHp;
+    public int MaxHp { get { return maxHp; } }
     [SerializeField] protected int hp;
+    public int Hp { get { return hp; } }
     private int position;
     public int Position { get { return position; } }
     [SerializeField] protected Hate hate;
+    public Hate Hate { get { return hate; } }
 
     private void Awake()
     {
@@ -72,6 +75,7 @@ public class Enemy : MonoBehaviour
     virtual public void Die()
     {
         Debug.Log(gameObject.name + " : Died");
+        HPSystem.instance.DieEnemy(this);
         EnemySystem.instance.Die(gameObject);
     }
 
@@ -91,5 +95,11 @@ public class Enemy : MonoBehaviour
     virtual public void DamagedHate(GameObject ally, float hitDamage)
     {
         hate.DamagedHate(ally, hitDamage);
+    }
+
+    // 체력 퍼센트를 반환한다.
+    public float GetHpRate()
+    {
+        return (float)hp / (float)maxHp;
     }
 }
