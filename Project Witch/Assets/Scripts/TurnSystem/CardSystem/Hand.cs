@@ -15,8 +15,8 @@ public class Hand : MonoBehaviour
 
     public static Hand instance;
     [SerializeField] List<GameObject> cards = new List<GameObject>();
-    uint maxCost;
-    [SerializeField] uint currentCost;
+    private int maxCost;
+    [SerializeField] int currentCost;
 
     public GameObject costText;
 
@@ -59,15 +59,21 @@ public class Hand : MonoBehaviour
     }
 
     // 손에 있는 num번쨰 카드를 제거한다.
-    public void Remove(int num)
+    public GameObject Discard(int num)
     {
+        GameObject temp = cards[num];
+        if (temp.GetComponent<Card>().Seal)
+            return null;
+
         cards.RemoveAt(num);
+
+        return temp;
     }
 
     // 손에 있는 card를 target에게 사용한다.
     public bool Use(GameObject card, GameObject target, int depth)
     {
-        uint cost = card.GetComponent<Card>().Cost;
+        int cost = card.GetComponent<Card>().Cost;
 
         if (cost > currentCost)
             return false;
@@ -86,13 +92,7 @@ public class Hand : MonoBehaviour
     // 덱에서 손으로 카드를 가져온다.
     public void Draw(GameObject card)
     {
-        //card.transform.SetParent(transform.root);
-        //card.transform.localScale = Vector3.one;
-        //card.transform.SetPositionAndRotation(new Vector3(transform.position.x, -3, transform.position.z),
-        //                                                   transform.rotation);
-
         cards.Add(card);
-        //card.transform.SetParent(transform);
         card.SetActive(true);
 
         Sort(card);
@@ -149,7 +149,7 @@ public class Hand : MonoBehaviour
     }
 
     // num 만큼 currentCost를 회복함
-    public void ChargeCost(uint num)
+    public void ChargeCost(int num)
     {
         currentCost += num;
         if (currentCost > maxCost)

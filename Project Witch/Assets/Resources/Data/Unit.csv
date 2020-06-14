@@ -1,4 +1,5 @@
-﻿Number,Name,Path,Card1,Card2,Card3,Card4,Card5
-0,null,null,0,0,0,0,0
-1,Base,Prefaps/Unit/BaseUnit,1,1,1,0,0
-2,Neko,Prefaps/Unit/NekoUnit,2,2,2,0,0
+﻿Number,Name,Path,DrawCount,MaxHp,Hp,Card1,Card2,Card3,Card4,Card5
+0,null,null,0,0,0,0,0,0,0,0
+1,Base,Prefaps/Unit/BaseUnit,1,30,30,1,1,1,0,0
+2,Neko,Prefaps/Unit/NekoUnit,2,25,25,2,2,2,0,0
+3,Warrior,Prefaps/Unit/WarriorUnit,1,35,35,,,,,

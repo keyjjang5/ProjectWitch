@@ -28,8 +28,8 @@ public class Deck : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AddUnit("Prefaps/Unit/BaseUnit");
-        AddUnit("Prefaps/Unit/NekoUnit");
+        AddUnit((int)UnitName.Base);
+        AddUnit((int)UnitName.Neko);
     }
 
     // Update is called once per frame
@@ -97,8 +97,9 @@ public class Deck : MonoBehaviour
 
             foreach (GameObject card in ally.GetComponent<Unit>().Cards)
             {
+                int i = card.GetComponent<Card>().CardNum;
                 newCard = Instantiate(card, newAlly.transform);
-                newCard.SetActive(false);
+                newCard.GetComponent<Card>().SetCardNum(i);
 
                 tempDeck.Add(newCard);
             }
@@ -108,21 +109,6 @@ public class Deck : MonoBehaviour
         {
             HPSystem.instance.ActiveUnitHpBar(allys[i].GetComponent<Unit>(), i);
         }
-
-        //foreach (GameObject card in saveDeck)
-        //{
-        //    newCard = Instantiate(card);
-        //    newCard.SetActive(false);
-        //    newCard.transform.SetParent(transform);
-        //    tempDeck.Add(newCard);
-        //}
-
-        //i = 0;
-        //foreach (Unit ally in allys)
-        //{
-        //    Instantiate(ally.Portrait, transform.GetChild(i));
-        //    i++;
-        //}
     }
 
     public void ClearCopyDeck()
@@ -163,6 +149,26 @@ public class Deck : MonoBehaviour
         AddCard(allys[allys.Count - 1]);
     }
 
+    // 덱에 Unit을 추가한다. (미완성, 이후에 자유로운 추가가 가능해질 것)
+    public void AddUnit(int num)
+    {
+        string path = DataBase.instance.UnitData[num]["Path"] as string;
+
+        GameObject loadAlly = Resources.Load(path) as GameObject;
+        loadAlly.SetActive(false);
+
+        GameObject newAlly = Instantiate(loadAlly, transform.GetChild(allys.Count));
+        newAlly.GetComponent<Unit>().SetUnitNum(num);
+        // awake 발생용
+        newAlly.SetActive(true);
+        newAlly.SetActive(false);
+
+        allys.Add(newAlly);
+        newAlly.GetComponent<Unit>().SetPosition(allys.Count - 1);
+
+        AddCard(allys[allys.Count - 1]);
+    }
+
     // 덱에 있는 Unit을 제거한다.
     public void RemoveUnit(GameObject unit)
     {
@@ -177,9 +183,9 @@ public class Deck : MonoBehaviour
     }
 
     // 모든 유닛의 DrawCount를 반환한다.
-    public uint GetDrawCount()
+    public int GetDrawCount()
     {
-        uint drawCount = 0;
+        int drawCount = 0;
         foreach(GameObject ally in allys)
         {
             drawCount += ally.GetComponent<Unit>().DrawCount;

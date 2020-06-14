@@ -22,7 +22,7 @@ public class BerserkState : State
         Debug.Log("Exit : BerserkState");
     }
 
-    override public void Execute(Unit target)
+    override public void Execute(Enemy enemy)
     {
         Debug.Log("20 Damage");
     }

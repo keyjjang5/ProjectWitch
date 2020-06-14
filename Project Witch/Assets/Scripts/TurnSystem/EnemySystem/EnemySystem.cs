@@ -63,20 +63,22 @@ public class EnemySystem : MonoBehaviour
         for (int i = 1; i < count + 1; i++)
         {
             // CSV 읽어서 쓸거임
-            int enemyPath = (int)DataBase.instance.MapData[num]["Enemy" + i];
+            int enemyNum = (int)DataBase.instance.MapData[num]["Enemy" + i];
             
-            string resourcePath = DataBase.instance.EnemyData[enemyPath]["Path"] as string;
+            string resourcePath = DataBase.instance.EnemyData[enemyNum]["Path"] as string;
             int posNum = (int)DataBase.instance.MapData[num]["Pos" + i];
             //
 
             GameObject enemy = Resources.Load(resourcePath) as GameObject;
+            enemy.SetActive(false);
+
             GameObject newEnemy = Instantiate(enemy);
             newEnemy.GetComponent<Enemy>().SetPosition(posNum);
+            newEnemy.GetComponent<Enemy>().SetEnemyNum(enemyNum);
 
             newEnemy.transform.SetParent(transform.Find("Pos" + newEnemy.GetComponent<Enemy>().Position));
 
             newEnemy.transform.localPosition = Vector3.zero;
-            newEnemy.SetActive(false);
             enemies.Add(newEnemy);
         }
 

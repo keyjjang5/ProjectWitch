@@ -22,7 +22,7 @@ public class AngryState : State
         Debug.Log("Exit : AngryState");
     }
 
-    override public void Execute(Unit target)
+    override public void Execute(Enemy enemy)
     {
         Debug.Log("15 Damage");
     }

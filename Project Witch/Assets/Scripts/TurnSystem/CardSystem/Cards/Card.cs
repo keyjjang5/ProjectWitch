@@ -11,18 +11,28 @@ public class Card : MonoBehaviour
      * maxRange : 최대 사정거리
      * minRange : 최소 사정거리
      * seal : 카드의 사용 가능을 확인
+     * cardNum : 이 카드의 CSV상에서의 번호
      */
     protected new string name;
-    protected uint cost;
-    public uint Cost { get { return cost; } }
+    protected int cost;
     private Vector3 scale;
     protected int maxRange;
     protected int minRange;
     protected bool seal;
+    protected int cardNum;
+
+
+    public int Cost { get { return cost; } }
+    public bool Seal { get { return seal; } }
+    public int CardNum { get { return cardNum; } }
 
     private void Awake()
     {
         seal = false;
+
+        cost = (int)DataBase.instance.CardData[cardNum]["Cost"];
+        maxRange = (int)DataBase.instance.CardData[cardNum]["MaxRange"];
+        minRange = (int)DataBase.instance.CardData[cardNum]["MinRange"];
     }
     // Start is called before the first frame update
     void Start()
@@ -138,8 +148,15 @@ public class Card : MonoBehaviour
         HPSystem.instance.UpdateHp();
     }
 
+    // 카드 사용을 막는다.
     virtual public void Sealed()
     {
         seal = true;
+    }
+
+    // 외부에서 카드 번호를 설정해준다.
+    public void SetCardNum(int num)
+    {
+        cardNum = num;
     }
 }

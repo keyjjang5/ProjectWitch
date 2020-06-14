@@ -73,7 +73,7 @@ public class CardSystem : MonoBehaviour
     }
 
     // 카드를 뽑는다.
-    public void Draw(uint num)
+    public void Draw(int num)
     {
         for (int i = 0; i < num; i++)
         {
@@ -108,6 +108,32 @@ public class CardSystem : MonoBehaviour
     // 턴 종료시에 사용한다.
     public void CardEnd()
     {
+        hand.HandEnd();
+        DiscardAll();
+    }
 
+    // num번쨰 카드 한장을 버린다.
+    public bool Discard(int num)
+    {
+        GameObject temp = hand.Discard(num);
+        if (temp == null)
+            return false;
+
+        deck.AddGraveyard(temp);
+
+        return true;
+    }
+
+    // 손의 모든 카드를 버린다.
+    public void DiscardAll()
+    {
+        int length = hand.GetCardsLength();
+        int j = 0;
+        for (int i = 0; i < length; i++)
+        {
+            Debug.Log("DisCard");
+            if (!Discard(j))
+                j++;
+        }
     }
 }

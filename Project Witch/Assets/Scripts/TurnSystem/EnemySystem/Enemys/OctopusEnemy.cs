@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class OctopusEnemy : Enemy
 {
-    private void Awake()
-    {
-        maxHp = 100;
-        hp = maxHp;
-        hate = new Hate();
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -20,12 +13,6 @@ public class OctopusEnemy : Enemy
 
         currentState = states[0];
         currentState.Enter();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     // 상태 변화 조건에 따라 상태가 변화함

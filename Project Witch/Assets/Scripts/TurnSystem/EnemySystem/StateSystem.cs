@@ -17,6 +17,8 @@ public class StateSystem : MonoBehaviour
         states.Add(new BaseState());
         states.Add(new AngryState());
         states.Add(new BerserkState());
+        states.Add(new CaveSpiderBaseState());
+        states.Add(new CaveSpiderHaveHouseState());
     }
 
     // Start is called before the first frame update

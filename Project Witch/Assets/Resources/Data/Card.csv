@@ -1,4 +1,4 @@
-﻿Number,Name,Path
-0,null,null
-1,Base,Prefaps/Cards/BaseCard
-2,Test,Prefaps/Cards/TestCard
+﻿Number,Name,Path,Cost,MinRange,MaxRange
+0,null,null,0,0,0
+1,Base,Prefaps/Cards/BaseCard,1,1,2
+2,Test,Prefaps/Cards/TestCard,2,2,3

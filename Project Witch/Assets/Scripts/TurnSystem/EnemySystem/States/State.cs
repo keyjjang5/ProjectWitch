@@ -12,21 +12,21 @@ public class State
 
     virtual public void Enter()
     {
-
+        Debug.Log(GetName() + " : Enter");
     }
 
     virtual public void Exit()
     {
-
+        Debug.Log(GetName() + " : Exit");
     }
 
-    virtual public void Execute(Unit target)
+    virtual public void Execute(Enemy enemy)
     {
 
     }
 
     virtual public string GetName()
     {
-        return "name";
+        return "State";
     }
 }

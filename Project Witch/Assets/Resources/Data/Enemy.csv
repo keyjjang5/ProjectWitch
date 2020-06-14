@@ -1,4 +1,5 @@
-﻿Number,Name,Path
-0,null,null
-1,Base,Prefaps/Enemies/BaseEnemy
-2,Octopus,Prefaps/Enemies/OctopusEnemy
+﻿Number,Name,Path,MaxHp,Hp,Atk
+0,null,null,0,0,0
+1,Base,Prefaps/Enemies/BaseEnemy,25,25,5
+2,Octopus,Prefaps/Enemies/OctopusEnemy,20,20,7
+3,CaveSpider,Prefaps/Enemies/CaveSpiderEnemy,20,20,5

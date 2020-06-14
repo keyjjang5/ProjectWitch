@@ -10,26 +10,31 @@ public class Unit : MonoBehaviour
      * drawCount : 이 유닛이 드로우 하는 카드의 수
      * name : 이 유닛의 이름
      * position : 이 유닛의 위치, 덱의 allys 의 번호와 같다.
+     * unitNUm : 이 유닛의 CSV상에서의 번호
      */
 
     protected List<GameObject> cards = new List<GameObject>();
-    public List<GameObject> Cards { get { return cards; } }
-    [SerializeField] protected int hp;
-    public int Hp { get { return hp; } }
-    protected int maxHp;
-    public int MaxHp { get { return maxHp; } }
-    protected uint drawCount;
-    public uint DrawCount { get { return drawCount; } }
+    [SerializeField] protected float hp;
+    protected float maxHp;
+    protected int drawCount;
     protected new string name;
     private int position;
+    protected int unitNum;
+
+    public List<GameObject> Cards { get { return cards; } }
+    public float MaxHp { get { return maxHp; } }
+    public float Hp { get { return hp; } }
+    public int DrawCount { get { return drawCount; } }
     public int Position { get { return position; } }
+    public int UnitNum { get { return unitNum; } }
 
     private void Awake()
     {
-        name = "Unit";
-        drawCount = 0;
-        maxHp = 100;
-        hp = maxHp;
+        name = DataBase.instance.UnitData[unitNum]["Name"] as string;
+        drawCount = (int)DataBase.instance.UnitData[unitNum]["DrawCount"];
+        maxHp = (int)DataBase.instance.UnitData[unitNum]["MaxHp"];
+        hp = (int)DataBase.instance.UnitData[unitNum]["Hp"];
+        Load(unitNum);
     }
 
     void Start()
@@ -38,9 +43,9 @@ public class Unit : MonoBehaviour
     }
 
     // num만큼 체력을 잃는다.
-    virtual public void Hited(int num)
+    public void Hited(float num)
     {
-        hp -= num;
+        hp -= (int)num;
 
         if (hp <= 0)
             Die();
@@ -55,7 +60,7 @@ public class Unit : MonoBehaviour
     }
 
     // 유닛이 가지고 있는 카드들을 불러온다.
-    virtual public void Load(int num)
+    public void Load(int num)
     {
         for (int i = 1; i < 6; i++)
         {
@@ -65,12 +70,15 @@ public class Unit : MonoBehaviour
                 continue;
 
             GameObject temp = Resources.Load(DataBase.instance.CardData[j]["Path"] as string) as GameObject;
+            temp.GetComponent<Card>().SetCardNum(j);
+            temp.SetActive(false);
+
             cards.Add(temp);
         }
     }
 
     // Unit이 가지고 있는 카드를 정렬한다.
-    virtual public void Sort()
+    public void Sort()
     {
         int j = 0;
         for (int i = 1; i < transform.childCount; i++)
@@ -94,5 +102,11 @@ public class Unit : MonoBehaviour
     public void SetPosition(int num)
     {
         position = num;
+    }
+
+    // 외부에서 유닛번호를 설정해줘야 함
+    public void SetUnitNum(int num)
+    {
+        unitNum = num;
     }
 }

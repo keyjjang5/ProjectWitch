@@ -22,10 +22,10 @@ public class BaseState : State
         Debug.Log("Exit : BaseState");
     }
 
-    override public void Execute(Unit target)
+    override public void Execute(Enemy enemy)
     {
-        Debug.Log("Target Name : " + target.name);
-        target.Hited(10);
+        //Debug.Log("Target Name : " + target.name);
+        //target.Hited(enemy.Atk);
     }
 
     override public string GetName()
