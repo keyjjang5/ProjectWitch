@@ -12,7 +12,7 @@ public class HPSystem : MonoBehaviour
      */
 
     public static HPSystem instance;
-    List<Unit> units = new List<Unit>();
+    List<Undead> undeads = new List<Undead>();
     List<Enemy> enemies = new List<Enemy>();
 
     private void Awake()
@@ -33,11 +33,29 @@ public class HPSystem : MonoBehaviour
         
     }
 
+    // 연결된 유닛들의 체력UI를 갱신한다.
+    public void UpdateHp()
+    {
+        //for(int i=0;i<units.Count;i++)
+        foreach (Undead undead in undeads)
+        {
+            transform.GetChild(undead.Position).GetComponent<Slider>().value = undead.HpRate;
+            transform.GetChild(undead.Position).Find("Text").GetComponent<Text>().text = undead.BattleHp + " / " + undead.BattleMaxHp;
+        }
+
+        //for (int i = 0; i < enemies.Count; i++)
+        foreach (Enemy enemy in enemies)
+        {
+            transform.GetChild(3 + enemy.Position).GetComponent<Slider>().value = enemy.HpRate;
+            transform.GetChild(3 + enemy.Position).Find("Text").GetComponent<Text>().text = enemy.Hp + " / " + enemy.MaxHp;
+        }
+    }
+
     // 해당 유닛의 HpBar를 활성화 시키고 연결한다.
-    public void ActiveUnitHpBar(Unit unit, int num)
+    public void ActiveUnitHpBar(Undead undead, int num)
     {
         transform.GetChild(num).gameObject.SetActive(true);
-        ConnectUnit(unit);
+        ConnectUnit(undead);
     }
 
     // 해당 적의 HpBar를 활성화 시키고 연결한다.
@@ -56,33 +74,15 @@ public class HPSystem : MonoBehaviour
     }
 
     // 유닛을 연결한다.
-    public void ConnectUnit(Unit unit)
+    public void ConnectUnit(Undead unit)
     {
-        units.Add(unit); 
+        undeads.Add(unit); 
     }
 
     // 적을 연결한다.
     public void ConnectEnemy(Enemy enemy)
     {
         enemies.Add(enemy);
-    }
-
-    // 연결된 유닛들의 체력UI를 갱신한다.
-    public void UpdateHp()
-    {
-        //for(int i=0;i<units.Count;i++)
-        foreach (Unit unit in units)
-        {
-            transform.GetChild(unit.Position).GetComponent<Slider>().value = unit.GetHpRate();
-            transform.GetChild(unit.Position).Find("Text").GetComponent<Text>().text = unit.Hp + " / " + unit.MaxHp;
-        }
-
-        //for (int i = 0; i < enemies.Count; i++)
-        foreach (Enemy enemy in enemies)
-        {
-            transform.GetChild(3 + enemy.Position).GetComponent<Slider>().value = enemy.GetHpRate();
-            transform.GetChild(3 + enemy.Position).Find("Text").GetComponent<Text>().text = enemy.Hp + " / " + enemy.MaxHp;
-        }
     }
 
     // 적이 죽을 시 UI를 지우고 연결을 해지한다.
@@ -94,10 +94,10 @@ public class HPSystem : MonoBehaviour
     }
 
     // 유닛이 죽을 시 UI를 지우고 연결을 해지한다.
-    public void DieUnit(Unit unit)
+    public void DieUnit(Undead unit)
     {
         transform.GetChild(unit.Position).gameObject.SetActive(false);
 
-        units.Remove(unit);
+        undeads.Remove(unit);
     }
 }

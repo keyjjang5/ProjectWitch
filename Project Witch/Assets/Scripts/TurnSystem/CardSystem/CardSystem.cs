@@ -52,9 +52,9 @@ public class CardSystem : MonoBehaviour
     }
 
     // readyCard를 사용한다.
-    public GameObject Use(GameObject target, int depth)
+    public GameObject Use(GameObject target)
     {
-        if (hand.Use(readyCard, target, depth))
+        if (hand.Use(readyCard, target))
             deck.AddGraveyard(readyCard);
 
         hand.Sort(readyCard);
@@ -92,7 +92,7 @@ public class CardSystem : MonoBehaviour
 
             hand.Draw(temp);
 
-            Debug.Log("Draw / 덱에 남은 개수 : " + deck.GetCardsLength() + "손에 있는 개수 : " + hand.GetCardsLength());
+            //Debug.Log("Draw / 덱에 남은 개수 : " + deck.GetCardsLength() + "손에 있는 개수 : " + hand.GetCardsLength());
         }
     }
 
@@ -131,9 +131,28 @@ public class CardSystem : MonoBehaviour
         int j = 0;
         for (int i = 0; i < length; i++)
         {
-            Debug.Log("DisCard");
             if (!Discard(j))
                 j++;
         }
+        Debug.Log("discardall end");
+    }
+
+    // 전투를 시작할 때 사용
+    public void BattleStart()
+    {
+        deck.CreateCopyDeck();
+        deck.Shuffle();
+
+        foreach (GameObject ally in deck.Allys)
+            ally.GetComponent<Undead>().BattleReadiness();
+    }
+
+    // 전투가 끝났을 때 사용
+    public void BattleEnd()
+    {
+        DiscardAll();
+        deck.ClearCopyDeck();
+        foreach (GameObject ally in deck.Allys)
+            ally.GetComponent<Undead>().BattleEnd();
     }
 }

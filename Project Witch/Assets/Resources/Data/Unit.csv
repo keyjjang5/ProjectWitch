@@ -1,5 +1,6 @@
-﻿Number,Name,Path,DrawCount,MaxHp,Hp,Card1,Card2,Card3,Card4,Card5
-0,null,null,0,0,0,0,0,0,0,0
-1,Base,Prefaps/Unit/BaseUnit,1,30,30,1,1,1,0,0
-2,Neko,Prefaps/Unit/NekoUnit,2,25,25,2,2,2,0,0
-3,Warrior,Prefaps/Unit/WarriorUnit,1,35,35,,,,,
+﻿Number,Name,Path,DrawCount,MaxHp,Hp,Atk,Card1,Card2,Card3,Card4,Card5
+0,null,null,0,0,0,0,0,0,0,0,0
+1,Base,Prefaps/Undeads/BaseUndead,1,30,30,8,1,1,1,0,0
+2,Neko,Prefaps/Undeads/NekoUndead,2,25,25,10,2,2,2,0,0
+3,Warrior,Prefaps/Undeads/WarriorUndead,1,35,35,6,3,0,0,0,0
+4,Supporter,Prefaps/Undeads/SupporterUndead,2,30,30,5,7,7,0,0,0

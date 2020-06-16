@@ -33,10 +33,9 @@ public class TurnSystem : MonoBehaviour
     }
 
     // 전투 시작
-    public void FightStart()
+    public void BattleStart()
     {
-        Deck.instance.CreateCopyDeck();
-        Deck.instance.Shuffle();
+        cardSystem.BattleStart();
         enemySystem.Load(3);
         PlayerTurnStart();
 
@@ -44,21 +43,24 @@ public class TurnSystem : MonoBehaviour
     }
 
     // 전투 종료
-    public void FightEnd()
+    public void BattleEnd()
     {
-        Deck.instance.ClearCopyDeck();
-        Debug.Log("FightEnd");
+        cardSystem.BattleEnd();
+        Debug.Log("BattleEnd");
     }
 
     // 플레이어의 턴을 시작
     public void PlayerTurnStart()
     {
+        ConditionSystem.instance.PlayerTurnStart();
         cardSystem.CardStart();
     }
 
     // 플레이어의 턴이 끝남
     public void PlayerTurnEnd()
     {
+        ConditionSystem.instance.PlayerTurnEnd();
+
         cardSystem.CardEnd();
 
         EnemyTurnStart();
@@ -67,12 +69,15 @@ public class TurnSystem : MonoBehaviour
     // 적의 턴을 시작
     public void EnemyTurnStart()
     {
+        ConditionSystem.instance.EnemyTurnStart();
         enemySystem.EnemyStart();
     }
 
     // 적의 턴이 끝남
     public void EnemyTurnEnd()
     {
+        ConditionSystem.instance.EnemyTurnEnd();
+
         enemySystem.EnemyEnd();
 
         PlayerTurnStart();

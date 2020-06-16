@@ -74,7 +74,7 @@ public class EnemySystem : MonoBehaviour
 
             GameObject newEnemy = Instantiate(enemy);
             newEnemy.GetComponent<Enemy>().SetPosition(posNum);
-            newEnemy.GetComponent<Enemy>().SetEnemyNum(enemyNum);
+            newEnemy.GetComponent<Enemy>().SetUnitNum(enemyNum);
 
             newEnemy.transform.SetParent(transform.Find("Pos" + newEnemy.GetComponent<Enemy>().Position));
 
@@ -104,6 +104,6 @@ public class EnemySystem : MonoBehaviour
         Destroy(enemy);
 
         if (enemies.Count == 0)
-            TurnSystem.instance.FightEnd();
+            TurnSystem.instance.BattleEnd();
     }
 }

@@ -114,12 +114,23 @@ public class Card : MonoBehaviour
     }
 
     // 사용했을 때 사용되는 효과를 나타낸다.
-    virtual public bool Use(GameObject target, int depth)
+    virtual public bool Use(GameObject target)
     {
+        int depth = (target.GetComponent<Enemy>().Position - 1) / 3 + 1;
+        float atk = transform.parent.GetComponent<Undead>().BattleAtk;
+
+        if (!CheckRange(depth))
+            return false;
         if (seal)
             return false;
 
-        Debug.Log("card");
+        Debug.Log("Card : " + target.name);
+
+        // 각 카드 기믹 작성
+
+        //
+
+        UIUpdate();
 
         return true;
     }

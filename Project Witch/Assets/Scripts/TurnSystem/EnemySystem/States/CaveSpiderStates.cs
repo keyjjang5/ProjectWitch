@@ -13,7 +13,7 @@ public class CaveSpiderBaseState : State
 
     override public void Execute(Enemy enemy)
     {
-        if (enemy.GetHpRate() >= 0.95f)
+        if (enemy.HpRate >= 0.95f)
         {
             BuildHouse(enemy);
             return;
@@ -22,7 +22,7 @@ public class CaveSpiderBaseState : State
         Attack(enemy.Hate.AllRandom(), enemy.Atk);
     }
 
-    private void Attack(Unit target, float atk)
+    private void Attack(Undead target, float atk)
     {
         target.Hited(atk);
     }
@@ -54,9 +54,12 @@ public class CaveSpiderHaveHouseState : State
         SlowAttack(enemy.Hate.ReverseHateRandom(), enemy.Atk);
     }
 
-    private void SlowAttack(Unit target, float atk)
+    private void SlowAttack(Undead target, float atk)
     {
+        Debug.Log("SlowAttack");
         // target에게 상태이상 슬로우 1 부여
+        target.AddCondition(new Slow());
+        // target에게 공격
         target.Hited(atk * 1.5f);
     }
 

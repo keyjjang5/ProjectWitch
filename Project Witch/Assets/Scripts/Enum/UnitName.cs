@@ -8,6 +8,7 @@ enum UnitName
     nullA,
     Base,
     Neko,
-    Warrior
+    Warrior,
+    Supporter
 }
 

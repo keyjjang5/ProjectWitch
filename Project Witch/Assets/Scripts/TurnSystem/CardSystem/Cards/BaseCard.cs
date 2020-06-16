@@ -4,19 +4,23 @@ using UnityEngine;
 
 public class BaseCard : Card
 {
-    override public bool Use(GameObject target, int depth)
+    override public bool Use(GameObject target)
     {
+        int depth = (target.GetComponent<Enemy>().Position - 1) / 3 + 1;
+        float atk = transform.parent.GetComponent<Undead>().BattleAtk;
+
         if (!CheckRange(depth))
+            return false;
+        if (seal)
             return false;
 
         Debug.Log("BaseCard : " + target.name);
 
+        // 각 카드 기믹 작성
         Enemy enemy = target.GetComponent<Enemy>();
 
-        enemy.Hited(10);
-
-        enemy.DamagedHate(transform.parent.gameObject, 10);
-        HateSystem.instance.HateUpdate();
+        enemy.Hited(transform.parent.gameObject, 10);
+        //
 
         UIUpdate();
 

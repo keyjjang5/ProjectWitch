@@ -51,7 +51,7 @@ public class Hate
     }
 
     // 가장 HatePoint가 높은 적을 공격
-    public Unit FirstPriority()
+    public Undead FirstPriority()
     {
         int biggest = -1;
         int num = -1;
@@ -69,7 +69,7 @@ public class Hate
     }
 
     // Apathy 등급인 적 중 하나를 공격
-    public Unit ApathyRandom()
+    public Undead ApathyRandom()
     {
         List<int> apathyMembers = new List<int>();
         for (int i = 0; i < hateLevels.Count; i++)
@@ -85,13 +85,13 @@ public class Hate
     }
 
     // 모든 적 중 랜덤으로 공격
-    public Unit AllRandom()
+    public Undead AllRandom()
     {
         return Deck.instance.GetUnit(Random.Range(0, hatePoints.Count));
     }
 
     // HateLevel이 높을 수록 높은 확률로 공격
-    public Unit HateRandom()
+    public Undead HateRandom()
     {
         List<int> convertNum = new List<int>();
         int temp = 0;
@@ -124,7 +124,7 @@ public class Hate
     }
 
     // HateLevel이 낮을 수록 높은 확률로 공격
-    public Unit ReverseHateRandom()
+    public Undead ReverseHateRandom()
     {
         List<int> convertNum = new List<int>();
         int temp = 0;

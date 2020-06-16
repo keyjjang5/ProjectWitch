@@ -58,7 +58,7 @@ public class Hand : MonoBehaviour
         
     }
 
-    // 손에 있는 num번쨰 카드를 제거한다.
+    // 손에 있는 num번쨰 카드를 버린다.
     public GameObject Discard(int num)
     {
         GameObject temp = cards[num];
@@ -71,13 +71,13 @@ public class Hand : MonoBehaviour
     }
 
     // 손에 있는 card를 target에게 사용한다.
-    public bool Use(GameObject card, GameObject target, int depth)
+    public bool Use(GameObject card, GameObject target)
     {
         int cost = card.GetComponent<Card>().Cost;
 
         if (cost > currentCost)
             return false;
-        if (!card.GetComponent<Card>().Use(target, depth))
+        if (!card.GetComponent<Card>().Use(target))
             return false;
 
         // 카드 사용 코스트 소모
@@ -139,7 +139,7 @@ public class Hand : MonoBehaviour
     // 가저온 카드를 가지고 있는 Unit에게 정리 요청
     public void Sort(GameObject card)
     {
-        card.GetComponentInParent<Unit>().Sort();
+        card.GetComponentInParent<Undead>().Sort();
     }
 
     // 모든 카드를 정리

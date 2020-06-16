@@ -2,3 +2,10 @@
 0,null,null,0,0,0
 1,Base,Prefaps/Cards/BaseCard,1,1,2
 2,Test,Prefaps/Cards/TestCard,2,2,3
+3,Slash,Prefaps/Cards/SlashCard,1,1,2
+4,Roar,Prefaps/Cards/RoarCard,1,0,0
+5,DefensePosition,Prefaps/Cards/DefensePositionCard,2,0,0
+6,Ready,Prefaps/Cards/ReadyCard,1,0,0
+7,Shot,Prefaps/Cards/ShotCard,1,1,3
+8,Heal,Prefaps/Cards/HealCard,1,0,0
+9,SupportShot,Prefaps/Cards/SupportShotCard,1,0,0

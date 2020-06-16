@@ -14,7 +14,7 @@ public class Deck : MonoBehaviour
 
     public static Deck instance;
     [SerializeField] List<GameObject> saveDeck = new List<GameObject>();
-    [SerializeField] List<GameObject> tempDeck = new List<GameObject>();
+    [SerializeField] List<GameObject> battleDeck = new List<GameObject>();
     [SerializeField] List<GameObject> graveyard = new List<GameObject>();
     [SerializeField] List<GameObject> allys = new List<GameObject>();
     public List<GameObject> Allys { get { return allys; } }
@@ -28,8 +28,10 @@ public class Deck : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AddUnit((int)UnitName.Base);
-        AddUnit((int)UnitName.Neko);
+        AddUnit((int)UnitName.Warrior);
+        AddUnit((int)UnitName.Supporter);
+        //AddUnit((int)UnitName.Base);
+        //AddUnit((int)UnitName.Neko);
     }
 
     // Update is called once per frame
@@ -41,7 +43,7 @@ public class Deck : MonoBehaviour
     // 무덤에 있는 카드를 덱으로 옮기고 섞는다.
     public void MixGraveyard()
     {
-        tempDeck.AddRange(graveyard);
+        battleDeck.AddRange(graveyard);
         //foreach(GameObject card in tempDeck)
         //{
             //card.transform.SetParent(transform.Find("Deck"));
@@ -56,21 +58,21 @@ public class Deck : MonoBehaviour
     {
         List<GameObject> temp = new List<GameObject>();
 
-        while (tempDeck.Count > 0)
+        while (battleDeck.Count > 0)
         {
-            int i = Random.Range(0, tempDeck.Count);
-            temp.Add(tempDeck[i]);
-            tempDeck.RemoveAt(i);
+            int i = Random.Range(0, battleDeck.Count);
+            temp.Add(battleDeck[i]);
+            battleDeck.RemoveAt(i);
         }
 
-        tempDeck.AddRange(temp);
+        battleDeck.AddRange(temp);
         temp.Clear();
     }
 
     // 덱에 카드를 추가한다.(임시 버전)
     public void AddCard(GameObject unit)
     {
-        foreach (GameObject card in unit.GetComponent<Unit>().Cards)
+        foreach (GameObject card in unit.GetComponent<Undead>().Cards)
         {
             saveDeck.Add(card);
         }
@@ -79,7 +81,7 @@ public class Deck : MonoBehaviour
     // 덱에서 Unit이 없어짐에 따라 카드를 제거한다.
     public void RemoveCard(GameObject unit)
     {
-        foreach (GameObject card in unit.GetComponent<Unit>().Cards)
+        foreach (GameObject card in unit.GetComponent<Undead>().Cards)
         {
             saveDeck.Remove(card);
         }
@@ -88,6 +90,8 @@ public class Deck : MonoBehaviour
     // 내 덱을 복사해서 전투에 사용할 덱을 만든다.
     public void CreateCopyDeck()
     {
+        ClearCopyDeck();
+
         GameObject newCard;
 
         foreach (GameObject ally in allys)
@@ -95,25 +99,28 @@ public class Deck : MonoBehaviour
             GameObject newAlly = ally; //Instantiate(ally, transform.GetChild(i));
             newAlly.SetActive(true);
 
-            foreach (GameObject card in ally.GetComponent<Unit>().Cards)
+            foreach (GameObject card in ally.GetComponent<Undead>().Cards)
             {
                 int i = card.GetComponent<Card>().CardNum;
                 newCard = Instantiate(card, newAlly.transform);
                 newCard.GetComponent<Card>().SetCardNum(i);
 
-                tempDeck.Add(newCard);
+                battleDeck.Add(newCard);
             }
         }
 
         for (int i = 0; i < allys.Count; i++)
         {
-            HPSystem.instance.ActiveUnitHpBar(allys[i].GetComponent<Unit>(), i);
+            HPSystem.instance.ActiveUnitHpBar(allys[i].GetComponent<Undead>(), i);
         }
     }
 
+    // 전투가 끝나면 임시로 만든 덱을 정리함
     public void ClearCopyDeck()
     {
-        tempDeck.Clear();
+        Debug.Log("ClearCopyDeck Start");
+        battleDeck.Clear();
+        graveyard.Clear();
     }
 
     // 사용한 카드를 무덤에 보낸다.
@@ -127,8 +134,8 @@ public class Deck : MonoBehaviour
     // 전투덱에 있는 num번째 카드를 제거한다.
     public GameObject Remove(int num)
     {
-        GameObject temp = tempDeck[num];
-        tempDeck.RemoveAt(num);
+        GameObject temp = battleDeck[num];
+        battleDeck.RemoveAt(num);
 
         return temp;
     }
@@ -136,20 +143,20 @@ public class Deck : MonoBehaviour
     // 전투덱의 길이를 반환한다.
     public int GetCardsLength()
     {
-        return tempDeck.Count;
+        return battleDeck.Count;
     }
 
-    // 덱에 Unit을 추가한다. (미완성, 이후에 자유로운 추가가 가능해질 것)
-    public void AddUnit(string path)
-    {
-        GameObject newAlly = Instantiate(Resources.Load(path) as GameObject, transform.GetChild(allys.Count));
-        newAlly.SetActive(false);
-        allys.Add(newAlly);
-        newAlly.GetComponent<Unit>().SetPosition(allys.Count - 1);
-        AddCard(allys[allys.Count - 1]);
-    }
+    // 덱에 Unit을 추가한다.
+    //public void AddUnit(string path)
+    //{
+    //    GameObject newAlly = Instantiate(Resources.Load(path) as GameObject, transform.GetChild(allys.Count));
+    //    newAlly.SetActive(false);
+    //    allys.Add(newAlly);
+    //    newAlly.GetComponent<Undead>().SetPosition(allys.Count - 1);
+    //    AddCard(allys[allys.Count - 1]);
+    //}
 
-    // 덱에 Unit을 추가한다. (미완성, 이후에 자유로운 추가가 가능해질 것)
+    // 덱에 Unit을 추가한다.
     public void AddUnit(int num)
     {
         string path = DataBase.instance.UnitData[num]["Path"] as string;
@@ -158,13 +165,13 @@ public class Deck : MonoBehaviour
         loadAlly.SetActive(false);
 
         GameObject newAlly = Instantiate(loadAlly, transform.GetChild(allys.Count));
-        newAlly.GetComponent<Unit>().SetUnitNum(num);
+        newAlly.GetComponent<Undead>().SetUnitNum(num);
         // awake 발생용
         newAlly.SetActive(true);
         newAlly.SetActive(false);
 
         allys.Add(newAlly);
-        newAlly.GetComponent<Unit>().SetPosition(allys.Count - 1);
+        newAlly.GetComponent<Undead>().SetPosition(allys.Count - 1);
 
         AddCard(allys[allys.Count - 1]);
     }
@@ -177,9 +184,9 @@ public class Deck : MonoBehaviour
     }
 
     // num번째의 유닛을 반환한다.
-    public Unit GetUnit(int num)
+    public Undead GetUnit(int num)
     {
-        return allys[num].GetComponent<Unit>();
+        return allys[num].GetComponent<Undead>();
     }
 
     // 모든 유닛의 DrawCount를 반환한다.
@@ -188,7 +195,7 @@ public class Deck : MonoBehaviour
         int drawCount = 0;
         foreach(GameObject ally in allys)
         {
-            drawCount += ally.GetComponent<Unit>().DrawCount;
+            drawCount += ally.GetComponent<Undead>().BattleDrawCount;
         }
 
         return drawCount;
@@ -202,12 +209,12 @@ public class Deck : MonoBehaviour
         allys.Remove(unit);
         // 영정사진걸기
         // 카드 사용 막기
-        for (int j = 1; j < unit.transform.childCount; j++)
+        for (int j = 2; j < unit.transform.childCount; j++)
         {
             unit.transform.GetChild(j).GetComponent<Card>().Sealed();
         }
 
         if (allys.Count == 0)
-            TurnSystem.instance.FightEnd();
+            TurnSystem.instance.BattleEnd();
     }
 }
