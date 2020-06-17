@@ -91,4 +91,89 @@ public class ConditionSystem : MonoBehaviour
                 goto Reset;
         }
     }
+
+    public List<Condition> SearchCondition(System.Type target)
+    {
+        List<Condition> returnConditions = new List<Condition>();
+        ConditionDivide divide = ConditionDivide.Condition;
+
+        if (target == typeof(Condition))
+            divide = ConditionDivide.Condition;
+        if (target == typeof(CountdownCondition))
+            divide = ConditionDivide.CountdownCondition;
+        if (target == typeof(CountCondition))
+            divide = ConditionDivide.CountCondition;
+        if (target == typeof(AttackedCondition))
+            divide = ConditionDivide.AttackedCondition;
+        if (target == typeof(HitedCondition))
+            divide = ConditionDivide.HitedCondition;
+        
+        switch (divide)
+        {
+            case ConditionDivide.Condition:
+                foreach (Condition condition in enemyConditions)
+                {
+                    if (condition as Condition != null)
+                        returnConditions.Add(condition);
+                }
+                foreach (Condition condition in undeadConditions)
+                {
+                    if (condition as Condition != null)
+                        returnConditions.Add(condition);
+                }
+                break;
+            case ConditionDivide.CountdownCondition:
+                foreach (Condition condition in enemyConditions)
+                {
+                    if (condition as CountdownCondition != null)
+                        returnConditions.Add(condition);
+                }
+                foreach (Condition condition in undeadConditions)
+                {
+                    if (condition as CountdownCondition != null)
+                        returnConditions.Add(condition);
+                }
+                break;
+            case ConditionDivide.CountCondition:
+                foreach (Condition condition in enemyConditions)
+                {
+                    if (condition as CountCondition != null)
+                        returnConditions.Add(condition);
+                }
+                foreach (Condition condition in undeadConditions)
+                {
+                    if (condition as CountCondition != null)
+                        returnConditions.Add(condition);
+                }
+                break;
+            case ConditionDivide.AttackedCondition:
+                foreach (Condition condition in enemyConditions)
+                {
+                    if (condition as AttackedCondition != null)
+                        returnConditions.Add(condition);
+                }
+                foreach (Condition condition in undeadConditions)
+                {
+                    if (condition as HitedCondition != null)
+                        returnConditions.Add(condition);
+                }
+                break;
+            case ConditionDivide.HitedCondition:
+                foreach (Condition condition in enemyConditions)
+                {
+                    if (condition as HitedCondition != null)
+                        returnConditions.Add(condition);
+                }
+                foreach (Condition condition in undeadConditions)
+                {
+                    if (condition as AttackedCondition != null)
+                        returnConditions.Add(condition);
+                }
+                break;
+            default:
+                break;
+        }   
+
+        return returnConditions;
+    }
 }

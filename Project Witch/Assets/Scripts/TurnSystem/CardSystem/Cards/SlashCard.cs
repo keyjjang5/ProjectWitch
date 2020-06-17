@@ -6,6 +6,9 @@ public class SlashCard : Card
 {
     override public bool Use(GameObject target)
     {
+        if (!target.GetComponent<Enemy>())
+            return false;
+
         int depth = (target.GetComponent<Enemy>().Position - 1) / 3 + 1;
         float atk = transform.parent.GetComponent<Undead>().BattleAtk;
 

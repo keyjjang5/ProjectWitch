@@ -58,4 +58,20 @@ public class HateSystem : MonoBehaviour
     {
         hates.RemoveAt(num);
     }
+
+    public void Tounted(int num)
+    {
+        foreach (Hate hate in hates)
+        {
+            hate.Tounted(num);
+        }
+    }
+
+    public void TountCancel(int num)
+    {
+        foreach (Hate hate in hates)
+        {
+            hate.TountCancel(num);
+        }
+    }
 }

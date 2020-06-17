@@ -41,13 +41,27 @@ public class Undead : Unit
         
     }
 
-    // num만큼 체력을 잃는다.
-    override public void Hited(float num)
+    private void OnMouseDown()
     {
-        battleHp -= (int)num;
+        if (CardSystem.instance.ReadyFlag)
+            UseCard();
+    }
+
+    // num만큼 체력을 잃는다.
+    override public void Hited(float damage)
+    {
+        base.Hited(damage);
+        battleHp -= (int)(damage * battleDef);
+        Debug.Log("Damage : " + damage + "battleDef : " + battleDef + " / " + gameObject.name + " Hited : " + damage * battleDef);
 
         if (hp <= 0 || battleHp <= 0)
             Die();
+    }
+
+    override public void Recover(float heal)
+    {
+        base.Recover(heal);
+        battleHp += (int)(heal);
     }
 
     // 죽는다.
@@ -56,6 +70,7 @@ public class Undead : Unit
         Debug.Log(name + " : Died");
         HPSystem.instance.DieUnit(this);
         Deck.instance.DieUnit(gameObject);
+        base.Die();
     }
 
     // 유닛이 가지고 있는 카드들을 불러온다.
@@ -95,5 +110,13 @@ public class Undead : Unit
     {
         base.BattleReadiness();
         battleDrawCount = drawCount;
+    }
+
+    public void ChangeCost(int num)
+    {
+        for (int i = 2; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).GetComponent<Card>().ChangeCost(num);
+        }
     }
 }

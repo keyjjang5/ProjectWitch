@@ -134,7 +134,6 @@ public class CardSystem : MonoBehaviour
             if (!Discard(j))
                 j++;
         }
-        Debug.Log("discardall end");
     }
 
     // 전투를 시작할 때 사용
@@ -154,5 +153,11 @@ public class CardSystem : MonoBehaviour
         deck.ClearCopyDeck();
         foreach (GameObject ally in deck.Allys)
             ally.GetComponent<Undead>().BattleEnd();
+    }
+
+    public void ChangeCost(int num)
+    {
+        deck.ChangeCost(num);
+        hand.ChangeCost(num);
     }
 }

@@ -6,11 +6,20 @@ public class DefensePositionCard : Card
 {
     override public bool Use(GameObject target)
     {
-        int depth = (target.GetComponent<Enemy>().Position - 1) / 3 + 1;
-        if (!CheckRange(depth))
+        // 자기 자신한테 사용하는 카드이기 때문에 사정거리가 상관없음
+        //if (!CheckRange(depth))
+        //return false;
+        if (seal)
             return false;
 
-        Debug.Log("DefensePositionCard : " + target.name);
+        Debug.Log("RoarCard : " + target.name);
+
+        // 각 카드 기믹 작성
+        /*
+         * 자기 자신에게 버프(입는 피해 30% 감소)을 건다.
+         */
+        transform.parent.GetComponent<Unit>().AddCondition(new DefensePosition(3));
+        //
 
         UIUpdate();
 

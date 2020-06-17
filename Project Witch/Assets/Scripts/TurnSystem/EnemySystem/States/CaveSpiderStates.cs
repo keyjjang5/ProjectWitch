@@ -24,6 +24,7 @@ public class CaveSpiderBaseState : State
 
     private void Attack(Undead target, float atk)
     {
+        Debug.Log("Attack");
         target.Hited(atk);
     }
 

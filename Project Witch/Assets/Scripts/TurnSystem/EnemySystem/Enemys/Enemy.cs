@@ -45,7 +45,7 @@ public class Enemy : Unit
     private void OnMouseDown()
     {
         if (CardSystem.instance.ReadyFlag)
-            CardUse();
+            UseCard();
     }
 
     // 상태에 따라 행동함
@@ -71,7 +71,7 @@ public class Enemy : Unit
     }
 
     // CardSystem이 준비 했던 카드를 사용하게 한다.
-    public void CardUse()
+    override public void UseCard()
     {
         CardSystem.instance.Use(gameObject);
     }
@@ -83,6 +83,11 @@ public class Enemy : Unit
         ChangeState();
         DamagedHate(unit, damage);
         HateSystem.instance.HateUpdate();
+
+        // 찾아온 상태이상들의 Update를 모두 실행
+        List<Condition> tempCon = ConditionSystem.instance.SearchCondition(typeof(AttackedCondition));
+        foreach (Condition condition in tempCon)
+            condition.Update(gameObject);
 
         if (hp <= 0)
             Die();

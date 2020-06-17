@@ -12,19 +12,9 @@ public class Condition
 
     protected GameObject target;
     [SerializeField]
-    private int countdown;
 
-    public int Countdown { get { return countdown; } }
 
-    public Condition()
-    {
-        this.countdown = 1;
-    }
-
-    public Condition(int countdown)
-    {
-        this.countdown = countdown;
-    }
+    public Condition() { }
 
     virtual public void Enter(GameObject gameObject)
     {
@@ -46,13 +36,6 @@ public class Condition
     virtual public bool TurnEnd()
     {
         target.GetComponent<Unit>().ConditionUpdate();
-        countdown--;
-
-        if (countdown <= 0)
-        {
-            ConditionSystem.instance.Remove(this, target);
-            return false;
-        }
 
         return true;
     }
@@ -61,6 +44,15 @@ public class Condition
     {
         Debug.Log("overlap");
         target.GetComponent<Unit>().ConditionUpdate();
-        countdown += num;
+    }
+
+    virtual public void Update()
+    {
+
+    }
+
+    virtual public void Update(GameObject gameObject)
+    {
+
     }
 }

@@ -34,25 +34,53 @@ public class Hate
         heal = 1.0f;
     }
 
-    // HatePoint와 HateLevel 동기화
-    public void Update()
+    // HatePoint와 HateLevel Update
+    virtual public void Update()
     {
         for (int i = 0; i < hatePoints.Count; i++)
         {
-            if (hatePoints[i] <= 0)
-                hateLevels[i] = HateLevel.Apathy;
-            if (hatePoints[i] > 0)
-                hateLevels[i] = HateLevel.Realization;
-            if (hatePoints[i] > 10)
-                hateLevels[i] = HateLevel.Vigilance;
-            if (hatePoints[i] > 30)
-                hateLevels[i] = HateLevel.Danger;
+            if (hateLevels[i] == HateLevel.Tount)
+                continue;
+
+            Synchronize(i);
         }
     }
 
-    // 가장 HatePoint가 높은 적을 공격
-    public Undead FirstPriority()
+    // HatePoint와 HateLevel 동기화
+    virtual public void Synchronize(int i)
     {
+        if (hatePoints[i] <= 0)
+            hateLevels[i] = HateLevel.Apathy;
+        if (hatePoints[i] > 0)
+            hateLevels[i] = HateLevel.Realization;
+        if (hatePoints[i] > 10)
+            hateLevels[i] = HateLevel.Vigilance;
+        if (hatePoints[i] > 30)
+            hateLevels[i] = HateLevel.Danger;
+    }
+
+    virtual public Undead TountRandom()
+    {
+        List<int> tountMembers = new List<int>();
+        for (int i = 0; i < hateLevels.Count; i++)
+        {
+            if (hateLevels[i] == HateLevel.Tount)
+                tountMembers.Add(i);
+        }
+
+        if (tountMembers.Count <= 0)
+            return AllRandom();
+
+        return Deck.instance.GetUnit(Random.Range(0, tountMembers.Count));
+    }
+
+    // 가장 HatePoint가 높은 적을 공격
+    virtual public Undead FirstPriority()
+    {
+        foreach(HateLevel level in hateLevels)
+            if (level == HateLevel.Tount)
+                return TountRandom();
+
         int biggest = -1;
         int num = -1;
         for (int i = 0; i < hatePoints.Count; i++)
@@ -69,8 +97,12 @@ public class Hate
     }
 
     // Apathy 등급인 적 중 하나를 공격
-    public Undead ApathyRandom()
+    virtual public Undead ApathyRandom()
     {
+        foreach (HateLevel level in hateLevels)
+            if (level == HateLevel.Tount)
+                return TountRandom();
+
         List<int> apathyMembers = new List<int>();
         for (int i = 0; i < hateLevels.Count; i++)
         {
@@ -85,14 +117,22 @@ public class Hate
     }
 
     // 모든 적 중 랜덤으로 공격
-    public Undead AllRandom()
+    virtual public Undead AllRandom()
     {
+        foreach (HateLevel level in hateLevels)
+            if (level == HateLevel.Tount)
+                return TountRandom();
+
         return Deck.instance.GetUnit(Random.Range(0, hatePoints.Count));
     }
 
     // HateLevel이 높을 수록 높은 확률로 공격
     public Undead HateRandom()
     {
+        foreach (HateLevel level in hateLevels)
+            if (level == HateLevel.Tount)
+                return TountRandom();
+
         List<int> convertNum = new List<int>();
         int temp = 0;
         foreach(HateLevel level in hateLevels)
@@ -124,8 +164,12 @@ public class Hate
     }
 
     // HateLevel이 낮을 수록 높은 확률로 공격
-    public Undead ReverseHateRandom()
+    virtual public Undead ReverseHateRandom()
     {
+        foreach (HateLevel level in hateLevels)
+            if (level == HateLevel.Tount)
+                return TountRandom();
+
         List<int> convertNum = new List<int>();
         int temp = 0;
         foreach (HateLevel level in hateLevels)
@@ -157,16 +201,26 @@ public class Hate
     }
 
     // 공격을 받으면 증가
-    public void DamagedHate(GameObject ally, float hitDamage)
+    virtual public void DamagedHate(GameObject ally, float hitDamage)
     {
         int targetNum = Deck.instance.Allys.IndexOf(ally);
         hatePoints[targetNum] += (int)(hitDamage * damage);
     }
 
     // 유닛이 죽을 때 사용
-    public void DieUnit(int num)
+    virtual public void DieUnit(int num)
     {
         hatePoints.RemoveAt(num);
         hateLevels.RemoveAt(num);
+    }
+
+    virtual public void Tounted(int num)
+    {
+        hateLevels[num] = HateLevel.Tount;
+    }
+    
+    virtual public void TountCancel(int num)
+    {
+        Synchronize(num);
     }
 }

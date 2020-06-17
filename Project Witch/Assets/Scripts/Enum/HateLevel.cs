@@ -8,6 +8,6 @@ enum HateLevel{
     Realization,
     Vigilance,
     Danger,
-    First
+    Tount
 }
 

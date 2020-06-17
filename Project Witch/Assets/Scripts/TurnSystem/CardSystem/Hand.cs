@@ -73,15 +73,26 @@ public class Hand : MonoBehaviour
     // 손에 있는 card를 target에게 사용한다.
     public bool Use(GameObject card, GameObject target)
     {
-        int cost = card.GetComponent<Card>().Cost;
+        Card tempCard = card.GetComponent<Card>();
+        int cost = tempCard.BattleCost;
 
         if (cost > currentCost)
             return false;
-        if (!card.GetComponent<Card>().Use(target))
+        if (!tempCard.Use(target))
             return false;
 
-        // 카드 사용 코스트 소모
-        currentCost -= cost;
+        // 카드 사용 코스트 소모, 0보다 작으면 0으로 퉁침
+        if (cost >= 0)
+            currentCost -= cost;
+
+        // Ready 예외사항 : 이런 식으로 하기 싫은데 좋은 방법을 못찾겠음
+        if (cost == tempCard.BattleCost)
+        {
+            CountCondition tempCon = card.transform.parent.GetComponent<Unit>().SearchCondition(typeof(Ready)) as CountCondition;
+            if (tempCon != null)
+                tempCon.DecreaseCount(tempCon.Count);
+        }
+
         costText.GetComponent<Text>().text = currentCost + " / " + maxCost;
 
         cards.Remove(card);
@@ -154,5 +165,13 @@ public class Hand : MonoBehaviour
         currentCost += num;
         if (currentCost > maxCost)
             currentCost = maxCost;
+    }
+
+    public void ChangeCost(int num)
+    {
+        foreach(GameObject card in cards)
+        {
+            card.GetComponent<Card>().ChangeCost(num);
+        }
     }
 }

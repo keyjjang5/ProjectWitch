@@ -2,16 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Slow : Condition
+public class Slow : CountdownCondition
 {
-    public Slow():base()
-    {
-
-    }
-    public Slow(int countdown):base(countdown)
-    {
-
-    }
+    public Slow() : base() { }
+    public Slow(int countdown) : base(countdown) { }
 
     override public void Enter(GameObject gameObject)
     {

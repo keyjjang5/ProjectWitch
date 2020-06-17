@@ -105,6 +105,9 @@ public class Deck : MonoBehaviour
                 newCard = Instantiate(card, newAlly.transform);
                 newCard.GetComponent<Card>().SetCardNum(i);
 
+                newCard.SetActive(true);
+                newCard.SetActive(false);
+
                 battleDeck.Add(newCard);
             }
         }
@@ -213,8 +216,23 @@ public class Deck : MonoBehaviour
         {
             unit.transform.GetChild(j).GetComponent<Card>().Sealed();
         }
+        // 상태이상 제거하기
+        unit.GetComponent<Unit>().ConditionClear();
 
         if (allys.Count == 0)
             TurnSystem.instance.BattleEnd();
+    }
+
+    public void ChangeCost(int num)
+    {
+        foreach (GameObject card in battleDeck)
+        {
+            card.GetComponent<Card>().ChangeCost(num);
+        }
+
+        foreach (GameObject card in graveyard)
+        {
+            card.GetComponent<Card>().ChangeCost(num);
+        }
     }
 }
