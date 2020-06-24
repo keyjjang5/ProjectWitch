@@ -187,6 +187,7 @@ public class Card : MonoBehaviour
         cardNum = num;
     }
 
+    // 이 카드의 비용을 num만큼 변경한다.
     public void ChangeCost(int num)
     {
         battleCost += num;

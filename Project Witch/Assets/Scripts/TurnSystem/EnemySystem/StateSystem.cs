@@ -20,16 +20,4 @@ public class StateSystem : MonoBehaviour
         states.Add(new CaveSpiderBaseState());
         states.Add(new CaveSpiderHaveHouseState());
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

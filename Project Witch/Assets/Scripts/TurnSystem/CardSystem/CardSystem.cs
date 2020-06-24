@@ -155,6 +155,7 @@ public class CardSystem : MonoBehaviour
             ally.GetComponent<Undead>().BattleEnd();
     }
 
+    // 덱과 손의 모든 카드의 코스트를 num만큼 변경함
     public void ChangeCost(int num)
     {
         deck.ChangeCost(num);

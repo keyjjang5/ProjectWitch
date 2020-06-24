@@ -17,6 +17,7 @@ public class Deck : MonoBehaviour
     [SerializeField] List<GameObject> battleDeck = new List<GameObject>();
     [SerializeField] List<GameObject> graveyard = new List<GameObject>();
     [SerializeField] List<GameObject> allys = new List<GameObject>();
+
     public List<GameObject> Allys { get { return allys; } }
 
 
@@ -30,8 +31,6 @@ public class Deck : MonoBehaviour
     {
         AddUnit((int)UnitName.Warrior);
         AddUnit((int)UnitName.Supporter);
-        //AddUnit((int)UnitName.Base);
-        //AddUnit((int)UnitName.Neko);
     }
 
     // Update is called once per frame
@@ -223,6 +222,7 @@ public class Deck : MonoBehaviour
             TurnSystem.instance.BattleEnd();
     }
 
+    // 덱과 무덤의 모든 카드들의 코스트를 num만큼 변경한다.
     public void ChangeCost(int num)
     {
         foreach (GameObject card in battleDeck)

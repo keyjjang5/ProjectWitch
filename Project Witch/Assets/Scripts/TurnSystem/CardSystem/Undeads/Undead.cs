@@ -58,6 +58,7 @@ public class Undead : Unit
             Die();
     }
 
+    // heal만큼 체력을 회복한다.
     override public void Recover(float heal)
     {
         base.Recover(heal);
@@ -106,12 +107,14 @@ public class Undead : Unit
         }
     }
 
+    // 전투준비 시에 사용
     override public void BattleReadiness()
     {
         base.BattleReadiness();
         battleDrawCount = drawCount;
     }
 
+    // 이 유닛이 가지고 있는 모든 카드의 코스트를 num만큼 변경
     public void ChangeCost(int num)
     {
         for (int i = 2; i < transform.childCount; i++)

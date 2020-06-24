@@ -7,12 +7,9 @@ public class Condition
 {
     /*
      * target : 이 상태이상을 가지고 있는 대상
-     * countdown : 이 상태이상이 남아 있는 시간
      */
 
     protected GameObject target;
-    [SerializeField]
-
 
     public Condition() { }
 

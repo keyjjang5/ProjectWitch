@@ -167,6 +167,7 @@ public class Hand : MonoBehaviour
             currentCost = maxCost;
     }
 
+    // 손에 있는 모든카드의 코스트를 num만큼 변경함
     public void ChangeCost(int num)
     {
         foreach(GameObject card in cards)

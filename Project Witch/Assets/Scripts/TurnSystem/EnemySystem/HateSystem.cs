@@ -59,6 +59,7 @@ public class HateSystem : MonoBehaviour
         hates.RemoveAt(num);
     }
 
+    // 도발에 걸림
     public void Tounted(int num)
     {
         foreach (Hate hate in hates)
@@ -67,6 +68,7 @@ public class HateSystem : MonoBehaviour
         }
     }
 
+    // 도발에서 풀려남
     public void TountCancel(int num)
     {
         foreach (Hate hate in hates)

@@ -214,11 +214,13 @@ public class Hate
         hateLevels.RemoveAt(num);
     }
 
+    // 도발에 당함
     virtual public void Tounted(int num)
     {
         hateLevels[num] = HateLevel.Tount;
     }
     
+    // 도발에서 벗어남
     virtual public void TountCancel(int num)
     {
         Synchronize(num);

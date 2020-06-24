@@ -46,6 +46,7 @@ public class Unit : MonoBehaviour
     public int Position { get { return position; } }
     public int UnitNum { get { return unitNum; } }
 
+    // 피해를 입을 때 사용
     virtual public void Hited(float damage)
     {
         Reset:
@@ -57,6 +58,7 @@ public class Unit : MonoBehaviour
         }
     }
 
+    // 피해를 회복 할 때 사용
     virtual public void Recover(float heal)
     {
         
